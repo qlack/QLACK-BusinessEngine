@@ -1,0 +1,689 @@
+databaseChangeLog:
+  - changeSet:
+      id: forms_001
+      author: European Dynamics SA
+      context: "!qlack-disabled"
+      changes:
+        - createTable:
+            tableName: extra_info
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                  name: id
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_on
+                  type: datetime
+              - column:
+                  name: modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: modified_on
+                  type: datetime
+              - column:
+                  name: version
+                  type: BIGINT
+              - column:
+                  name: age
+                  type: BIGINT
+              - column:
+                  name: weight
+                  type: BIGINT
+  - changeSet:
+      id: 1592388824240-2
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: file
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                  name: id
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_on
+                  type: datetime
+              - column:
+                  name: modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: modified_on
+                  type: datetime
+              - column:
+                  name: version
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1592388824240-3
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_form_data
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                  name: id
+                  type: INT
+              - column:
+                  name: created
+                  type: timestamp
+              - column:
+                  name: last_modified_time
+                  type: timestamp
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: groupname
+                  type: VARCHAR(255)
+              - column:
+                  name: organization_id
+                  type: INT
+              - column:
+                  name: app
+                  type: VARCHAR(255)
+              - column:
+                  name: form
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: form_version
+                  type: INT
+              - column:
+                  name: stage
+                  type: VARCHAR(255)
+              - column:
+                  name: document_id
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: draft
+                  type: CHAR(1)
+                  defaultValue: N
+              - column:
+                  constraints:
+                    nullable: false
+                  name: deleted
+                  type: CHAR(1)
+                  defaultValue: N
+              - column:
+                  name: xml
+                  type: MEDIUMTEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValue: admin
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_on
+                  type: datetime
+              - column:
+                  name: modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: modified_on
+                  type: datetime
+              - column:
+                  name: version
+                  type: BIGINT
+  - changeSet:
+      id: 1592388824240-4
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_form_data_attach
+            columns:
+              - column:
+                  name: created
+                  type: timestamp
+              - column:
+                  name: last_modified_time
+                  type: timestamp
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: groupname
+                  type: VARCHAR(255)
+              - column:
+                  name: organization_id
+                  type: INT
+              - column:
+                  name: app
+                  type: VARCHAR(255)
+              - column:
+                  name: form
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: form_version
+                  type: INT
+              - column:
+                  name: document_id
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: draft
+                  type: CHAR(1)
+                  defaultValue: N
+              - column:
+                  constraints:
+                    nullable: false
+                  name: deleted
+                  type: CHAR(1)
+                  defaultValue: N
+              - column:
+                  name: file_name
+                  type: VARCHAR(255)
+              - column:
+                  name: file_content
+                  type: LONGBLOB
+  - changeSet:
+      id: 1592388824240-5
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_form_data_lease
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                  name: document_id
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: groupname
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: expiration
+                  type: timestamp
+  - changeSet:
+      id: 1592388824240-6
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_form_definition
+            columns:
+              - column:
+                  name: created
+                  type: timestamp
+              - column:
+                  name: last_modified_time
+                  type: timestamp
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: app
+                  type: VARCHAR(255)
+              - column:
+                  name: form
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: form_version
+                  type: INT
+              - column:
+                  name: form_metadata
+                  type: VARCHAR(4000)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: deleted
+                  type: CHAR(1)
+                  defaultValue: N
+              - column:
+                  name: xml
+                  type: MEDIUMTEXT
+  - changeSet:
+      id: 1592388824240-7
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_form_definition_attach
+            columns:
+              - column:
+                  name: created
+                  type: timestamp
+              - column:
+                  name: last_modified_time
+                  type: timestamp
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: app
+                  type: VARCHAR(255)
+              - column:
+                  name: form
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: form_version
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: deleted
+                  type: CHAR(1)
+                  defaultValue: N
+              - column:
+                  name: file_name
+                  type: VARCHAR(255)
+              - column:
+                  name: file_content
+                  type: LONGBLOB
+  - changeSet:
+      id: 1592388824240-8
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_i_control_text
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: data_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: pos
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: control
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: val
+                  type: MEDIUMTEXT
+  - changeSet:
+      id: 1592388824240-9
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_i_current
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: data_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_modified_time
+                  type: timestamp
+              - column:
+                  name: last_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: username
+                  type: VARCHAR(255)
+              - column:
+                  name: groupname
+                  type: VARCHAR(255)
+              - column:
+                  name: organization_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: app
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: form
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: form_version
+                  type: INT
+              - column:
+                  name: stage
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: document_id
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: draft
+                  type: CHAR(1)
+                  defaultValue: N
+  - changeSet:
+      id: 1592388824240-10
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_organization
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: depth
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: pos
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1592388824240-11
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: orbeon_seq
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                  name: val
+                  type: INT
+  - changeSet:
+      id: 1592388824240-12
+      author: European Dynamics SA
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                  name: id
+                  type: VARCHAR(255)
+              - column:
+                  name: created_by
+                  type: VARCHAR(36)
+              - column:
+                  name: created_on
+                  type: datetime
+              - column:
+                  name: modified_by
+                  type: VARCHAR(36)
+              - column:
+                  name: modified_on
+                  type: datetime
+              - column:
+                  name: version
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(255)
+              - column:
+                  name: fn
+                  type: VARCHAR(255)
+              - column:
+                  name: ln
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status
+                  type: TINYINT(3)
+              - column:
+                  name: profile_pic
+                  type: VARCHAR(255)
+              - column:
+                  name: extra_info
+                  type: VARCHAR(255)
+  - changeSet:
+      id: 1592388824240-13
+      author: European Dynamics SA
+      changes:
+        - addUniqueConstraint:
+            columnNames: data_id, draft
+            constraintName: orbeon_i_current_i1
+            tableName: orbeon_i_current
+  - changeSet:
+      id: 1592388824240-14
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: extra_info
+            indexName: FK6w3nxh40v3lvthty4pp42ja9a
+            tableName: user
+  - changeSet:
+      id: 1592388824240-15
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: profile_pic
+            indexName: FK_USER_PROFILE_PIC_ID
+            tableName: user
+  - changeSet:
+      id: 1592388824240-16
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: document_id
+            indexName: orbeon_form_data_i2
+            tableName: orbeon_form_data
+  - changeSet:
+      id: 1592388824240-17
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: app
+              - column:
+                  name: form
+              - column:
+                  name: file_name
+            indexName: orbeon_form_definition_att_i1
+            tableName: orbeon_form_definition_attach
+  - changeSet:
+      id: 1592388824240-18
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: app
+              - column:
+                  name: form
+            indexName: orbeon_form_definition_i1
+            tableName: orbeon_form_definition
+  - changeSet:
+      id: 1592388824240-19
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: app
+              - column:
+                  name: form
+              - column:
+                  name: document_id
+              - column:
+                  name: draft
+            indexName: orbeon_from_data_attach_i1
+            tableName: orbeon_form_data_attach
+  - changeSet:
+      id: 1592388824240-20
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: document_id
+            indexName: orbeon_from_data_attach_i2
+            tableName: orbeon_form_data_attach
+  - changeSet:
+      id: 1592388824240-21
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: app
+              - column:
+                  name: form
+              - column:
+                  name: document_id
+              - column:
+                  name: draft
+            indexName: orbeon_from_data_i1
+            tableName: orbeon_form_data
+  - changeSet:
+      id: 1592388824240-22
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: data_id
+            indexName: orbeon_i_control_text_i1
+            tableName: orbeon_i_control_text
+  - changeSet:
+      id: 1592388824240-23
+      author: European Dynamics SA
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: app
+              - column:
+                  name: form
+              - column:
+                  name: draft
+            indexName: orbeon_i_current_i2
+            tableName: orbeon_i_current
+  - changeSet:
+      id: 1592388824240-24
+      author: European Dynamics SA
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: extra_info
+            baseTableName: user
+            constraintName: FK6w3nxh40v3lvthty4pp42ja9a
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: extra_info
+            validate: true
+  - changeSet:
+      id: 1592388824240-25
+      author: European Dynamics SA
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: profile_pic
+            baseTableName: user
+            constraintName: FK_USER_PROFILE_PIC_ID
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: CASCADE
+            onUpdate: CASCADE
+            referencedColumnNames: id
+            referencedTableName: file
+            validate: true
+  - changeSet:
+      id: 1592388824240-26
+      author: European Dynamics SA
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: data_id
+            baseTableName: orbeon_i_control_text
+            constraintName: orbeon_i_control_text_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: orbeon_form_data
+            validate: true
+  - changeSet:
+      id: 1592388824240-27
+      author: European Dynamics SA
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: data_id
+            baseTableName: orbeon_i_current
+            constraintName: orbeon_i_current_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: orbeon_form_data
+            validate: true
+

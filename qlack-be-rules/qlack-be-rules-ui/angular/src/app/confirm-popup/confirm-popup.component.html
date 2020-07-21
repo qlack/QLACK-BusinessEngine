@@ -1,0 +1,14 @@
+<div fxLayout="row wrap" fxFlex="100">
+  <h3>{{title}}</h3>
+  <div fxLayout="row" fxFlex="100">
+    <p>{{text}}</p>
+  </div>
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="end center">
+    <button (click)="close()" mat-button style="margin-right: 0.5em" tabindex="-1">
+      {{buttonLeft}}
+    </button>
+    <button (click)="submit()" mat-button style="margin-right: 1em;">
+      {{buttonRight}}
+    </button>
+  </div>
+</div>

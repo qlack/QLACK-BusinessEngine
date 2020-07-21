@@ -1,0 +1,39 @@
+<div class="page-container">
+
+  <div style="padding-bottom: 1em">
+    <mat-card-header>
+      <mat-card-title class="card-title center">Add new category</mat-card-title>
+    </mat-card-header>
+  </div>
+
+  <div fxLayout="row wrap">
+    <div fxFlex="100" fxLayout="row">
+      <mat-label fxFlex="20" fxLayoutAlign="start center">
+        Title:
+      </mat-label>
+      <mat-form-field fxFlex="40">
+        <input matInput placeholder="The title of the category">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100" fxLayout="row">
+      <mat-label fxFlex="20" fxLayoutAlign="start center">
+        Description:
+      </mat-label>
+      <mat-form-field fxFlex="40">
+        <input matInput placeholder="The description of the category">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap-reverse" fxLayoutAlign="end center" style="margin-top: 1em;">
+      <button (click)="cancel()" fxFlex.xs="100" mat-button
+              style="margin-right: 0.5em" tabindex="-1">
+        CANCEL
+      </button>
+      <button (click)="addCategory()" fxFlex.xs="100" mat-button>
+        CREATE
+      </button>
+    </div>
+
+  </div>
+</div>

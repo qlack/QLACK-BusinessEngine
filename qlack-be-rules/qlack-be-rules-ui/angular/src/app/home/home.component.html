@@ -1,0 +1,63 @@
+<div class="page-container">
+  <h2>Welcome to the Rules component</h2>
+
+  <p>
+    The Rules module allows QBE users to create and manage the business rules required by their application. More
+    specifically, QBE users are able to perform the following actions:
+  </p>
+
+  <ul>
+    <li>
+      Create business rules, either through the provided graphical interface (simple rules) or by uploading a DMN
+      (.xml) file which can later be edited through the provided text editor (complex rules).
+    </li>
+    <li>
+      Edit business rules including creating and managing different versions of each business rule.
+    </li>
+    <li>
+      Specify the data models used during business rule execution, either through the UI or by uploading Java
+      classes.
+    </li>
+    <li>
+      Group different versions of business rules and data models in working sets, categories and tags for easier
+      reference.
+    </li>
+  </ul>
+
+  <p>
+    Business rules can be used to perform validation of a form created in the Forms component or as part of the
+    execution of a workflow created in the Workflow component.
+  </p>
+</div>
+
+<div class="page-container">
+  <mat-card style="background-color: whitesmoke">
+    <mat-card-title>Projects</mat-card-title>
+    <mat-card-content>
+      <div>
+        <table class="mat-elevation-z0" fxFlex="grow" style="background-color: #CCC">
+          <ng-container matColumnDef="project">
+            <td style="padding: 1em">
+              <p style="margin: 0; font-size: larger;">
+                eMapis
+              </p>
+              <p style="margin: 0; font-size: larger;">
+                Created on Feb 1 2012 2:11 AM
+              </p>
+              <p style="margin: 0; font-size: larger;">
+                Created by Local Administrator
+              </p>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="edit">
+            <td style="text-align: center; vertical-align: middle;">
+              <button (click)="openProjectPage()" mat-button>
+                EDIT
+              </button>
+            </td>
+          </ng-container>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

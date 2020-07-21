@@ -1,0 +1,34 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.page-container {
+  padding: 0.5em;
+  margin: 1em;
+}
+
+#ng-container{
+  padding: 1em;
+}
+
+.card {
+  position: fixed;
+  width: 60%;
+  height: 100%;
+  background-color: whitesmoke;
+  padding: 0!important;
+}
+
+.mat-input-like {
+  padding-bottom: 1.34375em !important;
+  border-top: .84375em solid transparent !important;
+}
+
+.fixed-values {
+  padding: .5875em 0;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content {
+  padding: 0 !important
+}

@@ -1,0 +1,40 @@
+<div fxLayout="row wrap">
+<mat-card-header fxFlex="100">
+  <mat-card-title>{{title}}</mat-card-title>
+  <mat-card-subtitle>{{subtitle}}</mat-card-subtitle>
+</mat-card-header>
+
+<mat-card-content fxFlex="100" style="padding-top: 1em">
+  <form (ngSubmit)="add()" [formGroup]="createRuleForm" fxFlex="100" fxLayout="row wrap">
+
+    <mat-form-field fxFlex="100">
+      <mat-label>Name</mat-label>
+      <mat-select [(ngModel)]="name" formControlName="name" required>
+        <mat-option *ngFor="let rul of rules" [value]="rul">{{rul}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="100">
+      <mat-label>Version</mat-label>
+      <mat-select [(ngModel)]="version" formControlName="version" required>
+        <mat-option *ngFor="let ver of versions" [value]="ver">{{ver}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div fxFlex="100" fxLayout="row wrap-reverse" fxLayoutAlign="end center"
+         style="margin-top: 1em;">
+
+      <button (click)="cancel()" fxFlex.xs="100" mat-button
+              style="margin-right: 0.5em" tabindex="-1" type="reset">
+        {{cancelButton}}
+      </button>
+
+      <button [disabled]="!createRuleForm.valid" fxFlex.xs="100" mat-button type="submit">
+        {{okButton}}
+      </button>
+
+    </div>
+  </form>
+</mat-card-content>
+
+</div>

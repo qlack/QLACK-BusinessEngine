@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-list-item>
+    <a [routerLink]="['/users']"
+       class="table-action"
+       color="accent">
+      <button type="button" mat-button>Table & Pagination</button>
+    </a>
+  </mat-list-item>
+  <mat-list-item>
+    <a [routerLink]="['/users/0']"
+       class="table-action"
+       color="accent">
+      <button type="button" mat-button>Create new</button>
+    </a>
+  </mat-list-item>
+  <mat-list-item>
+    <a [routerLink]="['/fileupload']"
+       class="table-action"
+       color="accent"
+       matTooltip="Single file upload"
+       matTooltipPosition="above">
+      <button type="button" mat-button>Single File Upload</button>
+    </a>
+  </mat-list-item>
+  <mat-card-content>
+  </mat-card-content>
+</mat-card>

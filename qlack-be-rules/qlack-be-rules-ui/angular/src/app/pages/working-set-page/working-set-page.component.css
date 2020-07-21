@@ -1,0 +1,11 @@
+th, td {
+  padding: 15px;
+}
+
+p {
+  margin: 0;
+}
+
+.mat-divider.mat-divider-inset {
+  margin: 0;
+}

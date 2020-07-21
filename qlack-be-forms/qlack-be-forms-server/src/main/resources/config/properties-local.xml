@@ -1,0 +1,125 @@
+<properties xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:oxf="http://www.orbeon.com/oxf/processors">
+
+<!--    <property as="xs:string" name="oxf.fr.detail.process.send.*.*" >-->
+<!--        save-->
+<!--        then navigate(uri="javascript:sendDataToService()")-->
+<!--        recover error-message(message="Save Failed")-->
+<!--    </property>-->
+
+    <property as="xs:string" name="oxf.fr.detail.process.save.*.*" >
+        save
+        then navigate(uri="javascript:sendDataToService()")
+        recover error-message(message="Save Failed")
+    </property>
+
+    <property as="xs:string" name="oxf.fr.detail.process.publish.*.*" >
+        save
+        then publish
+        then navigate(uri="http://localhost:8080/test/api/forms/form")
+        recover error-message(message="Save Failed")
+    </property>
+
+
+    <!-- Choose which buttons will be shown in form builder details page -->
+    <!-- i.e. summary new test publish  -->
+    <property as="xs:string" name="oxf.fr.detail.buttons.orbeon.builder">
+        save summary new test publish
+    </property>
+
+    <property as="xs:anyURI" name="oxf.fr.default-logo.uri.*.*" value=""/>
+
+    <!-- Choose which buttons will be shown in form runner published form details page -->
+    <!-- i.e. close clear print pdf save submit  -->
+    <property
+            as="xs:string"
+            name="oxf.fr.detail.buttons.*.*"
+            value="submit"/>
+
+    <property
+            as="xs:boolean"
+            name="oxf.xforms.combine-resources"
+            value="true"/>
+
+    <!-- Choose which buttons will be shown in form runner published form details page -->
+    <!-- i.e. close clear print pdf save submit  -->
+    <property
+            as="xs:string"
+            name="oxf.fr.detail.buttons.*.*"
+            value="save"/>
+
+    <property as="xs:string" name="oxf.fr.css.custom.uri.*.*">
+        /forms/qbe/assets/qbe.css
+    </property>
+
+
+<!--    <property as="xs:boolean" name="oxf.epilogue.xforms.inspector"-->
+<!--              value="true"/>-->
+
+    <property as="xs:string"
+              name="oxf.fr.detail.html-page-layout.*.*"
+              value="fluid"/>
+
+    <!-- Tell orbeon your custom implementation provider name -->
+    <property as="xs:string" name="oxf.fr.persistence.provider.*.*.*"
+              value="qbe"/>
+    <!-- Tell orbeon your custom implementation provider is enabled -->
+    <property as="xs:boolean"
+              name="oxf.fr.persistence.qbe.active"
+              value="true"/>
+    <!-- Set the base uri of your app here. This must be set so orbeon-forms and your custom persistence implementation run together at the same host -->
+    <property
+            as="xs:anyURI"
+            name="oxf.url-rewriting.service.base-uri"
+            value="http://localhost:8080/"/>
+
+    <!-- Set the url of your custom implementation peristence endpoints -->
+    <property as="xs:anyURI" name="oxf.fr.persistence.qbe.uri"
+              value="test/api/forms"/>
+
+    <property as="xs:boolean"
+              name="oxf.fr.persistence.exist.active"
+              value="false"/>
+
+    <property
+            as="xs:string"
+            processor-name="oxf:page-flow"
+            name="page-public-methods"
+            value="GET HEAD POST PUT"/>
+
+    <property
+            as="xs:string"
+            processor-name="oxf:page-flow"
+            name="service-public-methods"
+            value="GET HEAD POST PUT"/>
+
+    <!--    <property-->
+    <!--            as="xs:anyURI"-->
+    <!--            processor-name="oxf:page-flow"-->
+    <!--            name="authorizer"-->
+    <!--            value="/orbeon-auth"/>-->
+
+    <!--    <property-->
+    <!--            as="xs:string"-->
+    <!--            name="oxf.fr.authentication.method"-->
+    <!--            value="container"/>-->
+
+
+    <!-- Most comprehensive logging configuration -->
+    <property as="xs:NMTOKENS" name="oxf.xforms.logging.debug">
+        document
+        model
+        submission
+        control
+        event
+        action
+        analysis
+        server
+        server-body
+        html
+        process
+        submission-details
+        submission-body
+    </property>
+
+</properties>

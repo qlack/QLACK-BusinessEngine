@@ -1,0 +1,91 @@
+<div class="page-container">
+
+  <div fxLayoutAlign="space-between start">
+    <div fxFlex="45">
+      <mat-card-header><mat-card-title>Category001</mat-card-title></mat-card-header>
+    </div>
+    <div fxFlex="45">
+      <mat-form-field style="float: right">
+        <mat-label>More actions</mat-label>
+        <mat-select>
+          <mat-option (click)="deleteCategory()"><mat-icon>delete</mat-icon>Delete</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="30" fxLayoutAlign="start center">
+          Title:
+        </mat-label>
+        <mat-form-field fxFlex="50">
+          <input matInput value="Category001" readonly="{{!flag}}">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="30" fxLayoutAlign="start center">
+          Description:
+        </mat-label>
+        <mat-form-field fxFlex="50">
+          <input matInput value="This is a category" readonly="{{!flag}}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
+
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="30" fxLayoutAlign="start center">
+          Created by:
+        </mat-label>
+        <p class="mat-input-like fixed-values" fxFlex="50">
+          Administrator
+        </p>
+      </div>
+
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="30" fxLayoutAlign="start center">
+          Created on:
+        </mat-label>
+        <p class="mat-input-like fixed-values" fxFlex="50">
+          Apr 30 2020 4:56 PM
+        </p>
+      </div>
+
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="30" fxLayoutAlign="start center">
+          Last modified by:
+        </mat-label>
+        <p class="mat-input-like fixed-values" fxFlex="50">
+          Administrator
+        </p>
+      </div>
+
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="30" fxLayoutAlign="start center">
+          Last modified on:
+        </mat-label>
+        <p class="mat-input-like fixed-values" fxFlex="50">
+          May 29 2020 3:34 PM
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="page-container" style="width: 95%; text-align: right">
+    <button mat-button style="vertical-align: top;" *ngIf=!flag (click)="editCategory()">
+      EDIT
+    </button>
+    <button mat-button style=" vertical-align: top;" *ngIf=flag (click)="editCategory()">
+      CANCEL
+    </button>
+    <button mat-button style="margin-left: 1.5em"
+            *ngIf=flag (click)="editCategory()">
+      SAVE
+    </button>
+  </div>
+</div>
