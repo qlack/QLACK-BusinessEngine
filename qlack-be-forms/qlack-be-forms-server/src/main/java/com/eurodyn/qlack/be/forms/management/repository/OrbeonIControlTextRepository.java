@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrbeonIControlTextRepository extends JpaRepository<OrbeonIControlText, Long>,
-        QuerydslPredicateExecutor<OrbeonIControlText> {
+    QuerydslPredicateExecutor<OrbeonIControlText> {
 
 }

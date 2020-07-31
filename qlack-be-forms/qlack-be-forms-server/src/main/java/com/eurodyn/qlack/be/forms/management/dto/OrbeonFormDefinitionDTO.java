@@ -15,15 +15,15 @@ import java.time.Instant;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrbeonFormDefinitionDTO extends BaseDTO {
 
-    private Long version;
-    private Instant created;
-    private Instant lastModifiedTime;
-    private String lastModifiedBy;
-    private String app;
-    private String form;
-    private long formVersion;
-    private String formMetadata;
-    private String deleted = "N";
-    private String xml;
+  private Long version;
+  private Instant created;
+  private Instant lastModifiedTime;
+  private String lastModifiedBy;
+  private String app;
+  private String form;
+  private long formVersion;
+  private String formMetadata;
+  private String deleted = "N";
+  private String xml;
 }
 

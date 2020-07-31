@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public abstract class OrbeonFormDataMapper {
 
-    @Autowired
-    OrbeonFormDataRepository repository;
+  @Autowired
+  OrbeonFormDataRepository repository;
 
-    public abstract OrbeonFormData map(OrbeonFormDataDTO dto);
+  public abstract OrbeonFormData map(OrbeonFormDataDTO dto);
 
-    public abstract OrbeonFormDataDTO map(OrbeonFormData entity);
+  public abstract OrbeonFormDataDTO map(OrbeonFormData entity);
 
-    public abstract void map(OrbeonFormDataDTO dto, @MappingTarget OrbeonFormData entity);
+  public abstract void map(OrbeonFormDataDTO dto, @MappingTarget OrbeonFormData entity);
 }

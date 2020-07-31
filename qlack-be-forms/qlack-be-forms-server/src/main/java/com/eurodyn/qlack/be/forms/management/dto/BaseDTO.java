@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public abstract class BaseDTO {
 
-    private String id;
+  private String id;
 
 }

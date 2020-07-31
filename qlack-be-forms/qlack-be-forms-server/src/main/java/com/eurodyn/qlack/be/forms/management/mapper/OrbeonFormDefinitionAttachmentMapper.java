@@ -12,12 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public abstract class OrbeonFormDefinitionAttachmentMapper {
 
-    @Autowired
-    OrbeonFormDefinitionAttachmentRepository repository;
+  @Autowired
+  OrbeonFormDefinitionAttachmentRepository repository;
 
-    public abstract OrbeonFormDefinitionAttachment map(OrbeonFormDefinitionAttachmentDTO dto);
+  public abstract OrbeonFormDefinitionAttachment map(OrbeonFormDefinitionAttachmentDTO dto);
 
-    public abstract OrbeonFormDefinitionAttachmentDTO map(OrbeonFormDefinitionAttachment entity);
+  public abstract OrbeonFormDefinitionAttachmentDTO map(OrbeonFormDefinitionAttachment entity);
 
-    public abstract void map(OrbeonFormDefinitionAttachmentDTO dto, @MappingTarget OrbeonFormDefinitionAttachment entity);
+  public abstract void map(OrbeonFormDefinitionAttachmentDTO dto,
+      @MappingTarget OrbeonFormDefinitionAttachment entity);
 }

@@ -6,7 +6,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrbeonFormDataAttachmentRepository extends JpaRepository<OrbeonFormDataAttachment, String>,
-        QuerydslPredicateExecutor<OrbeonFormDataAttachment> {
+public interface OrbeonFormDataAttachmentRepository extends
+    JpaRepository<OrbeonFormDataAttachment, String>,
+    QuerydslPredicateExecutor<OrbeonFormDataAttachment> {
 
 }

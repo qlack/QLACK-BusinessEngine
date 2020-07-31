@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public abstract class OrbeonIControlTextMapper {
 
-    @Autowired
-    OrbeonIControlTextRepository repository;
+  @Autowired
+  OrbeonIControlTextRepository repository;
 
-    public abstract OrbeonIControlText map(OrbeonIControlTextDTO dto);
+  public abstract OrbeonIControlText map(OrbeonIControlTextDTO dto);
 
-    public abstract OrbeonIControlTextDTO map(OrbeonIControlText entity);
+  public abstract OrbeonIControlTextDTO map(OrbeonIControlText entity);
 
-    public abstract void map(OrbeonIControlTextDTO dto, @MappingTarget OrbeonIControlText entity);
+  public abstract void map(OrbeonIControlTextDTO dto, @MappingTarget OrbeonIControlText entity);
 }

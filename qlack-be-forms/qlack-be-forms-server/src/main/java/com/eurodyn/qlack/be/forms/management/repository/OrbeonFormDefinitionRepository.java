@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrbeonFormDefinitionRepository extends JpaRepository<OrbeonFormDefinition, String>,
-        QuerydslPredicateExecutor<OrbeonFormDefinition> {
+    QuerydslPredicateExecutor<OrbeonFormDefinition> {
 
 }

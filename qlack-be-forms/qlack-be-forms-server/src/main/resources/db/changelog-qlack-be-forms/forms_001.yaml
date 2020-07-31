@@ -320,6 +320,12 @@ databaseChangeLog:
             tableName: orbeon_i_control_text
             columns:
               - column:
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                  name: id
+                  type: INT
+              - column:
                   constraints:
                     nullable: false
                   name: data_id

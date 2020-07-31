@@ -16,20 +16,20 @@ import java.time.Instant;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrbeonICurrentDTO extends BaseDTO {
 
-    private long data_id;
+  private long data_id;
 
-    private Long version;
+  private Long version;
 
-    private Instant created;
-    private Instant lastModifiedTime;
-    private String lastModifiedBy;
-    private String username;
-    private String groupname;
-    private long organizationId;
-    private String app;
-    private String form;
-    private long formVersion;
-    private String stage;
-    private String documentId;
-    private String draft = "N";
+  private Instant created;
+  private Instant lastModifiedTime;
+  private String lastModifiedBy;
+  private String username;
+  private String groupname;
+  private long organizationId;
+  private String app;
+  private String form;
+  private long formVersion;
+  private String stage;
+  private String documentId;
+  private String draft = "N";
 }

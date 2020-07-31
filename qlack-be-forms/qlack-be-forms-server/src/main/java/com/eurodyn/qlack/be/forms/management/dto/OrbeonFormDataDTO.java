@@ -16,31 +16,31 @@ import java.time.Instant;
 public class OrbeonFormDataDTO extends BaseDTO {
 
 
-    private Instant created;
+  private Instant created;
 
-    private Instant lastModifiedTime;
+  private Instant lastModifiedTime;
 
-    private String lastModifiedBy;
+  private String lastModifiedBy;
 
-    private String username;
+  private String username;
 
-    private String groupname;
+  private String groupname;
 
-    private long organizationId;
+  private long organizationId;
 
-    private String app;
+  private String app;
 
-    private String form;
+  private String form;
 
-    private long formVersion;
+  private long formVersion;
 
-    private String stage;
+  private String stage;
 
-    private String documentId;
+  private String documentId;
 
-    private String draft = "N";
+  private String draft = "N";
 
-    private String deleted = "N";
+  private String deleted = "N";
 
-    private String xml;
+  private String xml;
 }

@@ -12,12 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Mapper(componentModel = "spring", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public abstract class OrbeonICurrentMapper {
 
-    @Autowired
-    OrbeonICurrentRepository repository;
+  @Autowired
+  OrbeonICurrentRepository repository;
 
-    public abstract OrbeonICurrent map(OrbeonICurrentDTO dto);
+  public abstract OrbeonICurrent map(OrbeonICurrentDTO dto);
 
-    public abstract OrbeonICurrentDTO map(OrbeonICurrent entity);
+  public abstract OrbeonICurrentDTO map(OrbeonICurrent entity);
 
-    public abstract void map(OrbeonICurrentDTO dto, @MappingTarget OrbeonICurrent entity);
+  public abstract void map(OrbeonICurrentDTO dto, @MappingTarget OrbeonICurrent entity);
 }

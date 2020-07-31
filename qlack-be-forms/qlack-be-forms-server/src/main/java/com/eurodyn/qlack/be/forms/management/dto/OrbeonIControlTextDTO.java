@@ -13,11 +13,11 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrbeonIControlTextDTO extends BaseDTO {
 
-    private long data_id;
+  private long data_id;
 
-    private Long version;
+  private Long version;
 
-    private long pos;
-    private String control;
-    private String val;
+  private long pos;
+  private String control;
+  private String val;
 }

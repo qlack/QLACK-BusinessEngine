@@ -16,41 +16,41 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @SpringBootApplication
 @EnableJpaRepositories({
-        "com.eurodyn.qlack.be.forms.management.repository"
+    "com.eurodyn.qlack.be.forms.management.repository"
 })
 @EntityScan({
-        "com.eurodyn.qlack.be.common.model",
-        "com.eurodyn.qlack.fuse.lexicon.model",
-        "com.eurodyn.qlack.fuse.aaa.model",
-        "com.eurodyn.qlack.be.forms.management.model"
+    "com.eurodyn.qlack.be.common.model",
+    "com.eurodyn.qlack.fuse.lexicon.model",
+    "com.eurodyn.qlack.fuse.aaa.model",
+    "com.eurodyn.qlack.be.forms.management.model"
 })
 @ComponentScan(basePackages = {
-        "com.eurodyn.qlack.be.forms.management.controller",
-        "com.eurodyn.qlack.be.forms.management.service",
-        "com.eurodyn.qlack.be.forms.management.mapper",
-        "com.eurodyn.qlack.util"
+    "com.eurodyn.qlack.be.forms.management.controller",
+    "com.eurodyn.qlack.be.forms.management.service",
+    "com.eurodyn.qlack.be.forms.management.mapper",
+    "com.eurodyn.qlack.util"
 })
 public class QlackBusinessEngineFormsManagement {
 
-    public static void main(String[] args) {
-        SpringApplication.run(QlackBusinessEngineFormsManagement.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(QlackBusinessEngineFormsManagement.class, args);
+  }
 
-    @Bean
-    public WebXmlBridge webXmlBridge() {
-        return new WebXmlBridge();
-    }
+  @Bean
+  public WebXmlBridge webXmlBridge() {
+    return new WebXmlBridge();
+  }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8081")
-                        .allowedHeaders("*");
-            }
-        };
-    }
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+            .allowedOrigins("http://localhost:8081")
+            .allowedHeaders("*");
+      }
+    };
+  }
 
 }

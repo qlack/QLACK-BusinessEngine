@@ -14,19 +14,20 @@ import java.time.Instant;
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class OrbeonFormDataAttachmentDTO extends BaseDTO {
-    private Instant created;
-    private Instant lastModifiedTime;
-    private String lastModifiedBy;
-    private String username;
-    private String groupname;
-    private Long organizationId;
-    private String app;
-    private String form;
-    private Long formVersion;
-    private String documentId;
-    private String draft = "N";
-    private String deleted;
-    private String fileName;
-    private byte[] fileContent;
+
+  private Instant created;
+  private Instant lastModifiedTime;
+  private String lastModifiedBy;
+  private String username;
+  private String groupname;
+  private Long organizationId;
+  private String app;
+  private String form;
+  private Long formVersion;
+  private String documentId;
+  private String draft = "N";
+  private String deleted;
+  private String fileName;
+  private byte[] fileContent;
 }
 
