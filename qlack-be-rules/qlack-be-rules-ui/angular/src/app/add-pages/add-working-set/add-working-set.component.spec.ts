@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddWorkingSetComponent } from './add-working-set.component';
+import {AddWorkingSetComponent} from './add-working-set.component';
 
 describe('AddWorkingSetComponent', () => {
   let component: AddWorkingSetComponent;

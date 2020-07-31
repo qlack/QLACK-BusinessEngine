@@ -1,0 +1,19 @@
+version: '3.7'
+
+networks:
+  qbe:
+
+services:
+  qbe-db:
+    image: mysql:5.7
+    hostname: qbe-db
+    container_name: qbe-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=jijikos
+      - MYSQL_DATABASE=qbe
+      - MYSQL_PASSWORD=jijikos
+    ports:
+      - 3306:3306
+    networks:
+      - qbe

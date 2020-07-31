@@ -7,63 +7,73 @@
   </div>
 
   <div fxLayout="row wrap">
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Title:
-      </mat-label>
-      <mat-form-field fxFlex="40">
-        <input matInput placeholder="The title of the rule">
-      </mat-form-field>
-    </div>
+    <form (ngSubmit)="addRule()" [formGroup]="addRuleForm" fxFlex="100" fxLayout="row wrap">
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Name:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <input formControlName="name" matInput placeholder="The name of the rule" required>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Description:
-      </mat-label>
-      <mat-form-field fxFlex="40">
-        <input matInput placeholder="The description of the rule">
-      </mat-form-field>
-    </div>
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Description:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <input formControlName="description" matInput placeholder="The description of the rule">
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Status:
-      </mat-label>
-      <mat-radio-group class="mat-input-like fixed-values" fxFlex="40"
-                       aria-label="Select an option" color="primary">
-        <mat-radio-button value="1">Active</mat-radio-button>
-        <mat-radio-button style="padding-left: 10px" value="2">Inactive</mat-radio-button>
-      </mat-radio-group>
-    </div>
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Status:
+        </mat-label>
+        <mat-radio-group aria-label="Select an option" class="mat-input-like fixed-values"
+                         color="primary"
+                         formControlName="status" fxFlex="40">
+          <mat-radio-button [value]="true">Active</mat-radio-button>
+          <mat-radio-button [value]="false" style="padding-left: 10px" value="2">Inactive
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
 
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Category:
-      </mat-label>
-      <mat-form-field fxFlex="40">
-        <mat-label>Choose a category</mat-label>
-        <mat-select  multiple>
-          <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Category:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <mat-label>Choose a category</mat-label>
+          <mat-select formControlName="categories" multiple>
+            <mat-option *ngFor="let category of categories"
+                        [value]="category">{{category.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row" class="fixed-values mat-input-like">
-      <input #xmlInput (change)="inputFile($event)" accept=".xml" hidden="true" onclick="this.value=null" type="file"/>
-      <button (click)="xmlInput.click()" mat-button>
-        Choose a DMN xml file
-      </button>
-    </div>
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Based on:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <mat-select (valueChange)="changeRule($event)" [disabled]="!rules">
+            <mat-option *ngFor="let ruleDto of rules"
+                        [value]="ruleDto">{{ruleDto.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row wrap-reverse" fxLayoutAlign="end center" style="margin-top: 1em;">
-      <button (click)="cancel()" fxFlex.xs="100" mat-button
-              style="margin-right: 0.5em" tabindex="-1">
-        CANCEL
-      </button>
-      <button (click)="addRule()" fxFlex.xs="100" mat-button>
-        CREATE
-      </button>
-    </div>
-
+      <div fxFlex="100" fxLayout="row wrap-reverse" fxLayoutAlign="end center"
+           style="margin-top: 1em;">
+        <button (click)="cancel()" fxFlex.xs="100" mat-button
+                style="margin-right: 0.5em" tabindex="-1">
+          CANCEL
+        </button>
+        <button [disabled]="!addRuleForm.valid" fxFlex.xs="100" mat-button type="submit">
+          CREATE
+        </button>
+      </div>
+    </form>
   </div>
 </div>

@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CategoryService} from '../../services/category.service';
+import {CategoryDto} from '../../dto/category-dto';
+import {FormBuilder, Validators} from '@angular/forms';
+import {WorkingSetDto} from '../../dto/working-set-dto';
+import {Router} from '@angular/router';
+import {WorkingSetService} from '../../services/working-set.service';
+import {Location} from '@angular/common';
 import {ProjectComponent} from '../../project/project.component';
+import {WorkingSetVersionService} from '../../services/working-set-version.service';
 
 @Component({
   selector: 'app-add-working-set',
@@ -8,40 +16,67 @@ import {ProjectComponent} from '../../project/project.component';
 })
 export class AddWorkingSetComponent implements OnInit {
 
-  categories = ['Category 1', 'Category 2', 'Category 3'];
+  categories: CategoryDto[];
+  workingSetDto: WorkingSetDto;
+  workingSets: WorkingSetDto[];
 
-  constructor(private project: ProjectComponent) { }
+  addWorkingSetForm = this.fb.group({
+    name: ['', Validators.required],
+    description: [''],
+    status: [true],
+    categories: []
+  });
+
+  constructor(
+    private project: ProjectComponent,
+    private categoryService: CategoryService,
+    private workingSetService: WorkingSetService,
+    private workingSetVersionService: WorkingSetVersionService,
+    private router: Router,
+    private location: Location,
+    private fb: FormBuilder
+  ) {
+  }
 
   ngOnInit(): void {
+    this.workingSetService.getAllSorted().subscribe(response =>
+      this.workingSets = response
+    );
+
+    this.categoryService.getAllSorted().subscribe(response =>
+      this.categories = response);
   }
 
   cancel() {
-    if (this.project.caller === 'rule') {
-      this.project.openRulePage();
-    }
-    else if (this.project.caller === 'category') {
-      this.project.openCategoryPage();
-    }
-    else if (this.project.caller === 'workingSet'){
-      this.project.openWorkingSetPage();
-    }
-    else {
-      this.project.addWorkingSet();
-    }
+    this.location.back();
   }
 
   addWorkingSet() {
-    if (this.project.caller === 'rule') {
-      this.project.openRulePage();
+    if (this.addWorkingSetForm.valid) {
+      const workingSetDto: WorkingSetDto = this.addWorkingSetForm.value;
+
+      this.workingSetService.save(workingSetDto).subscribe(response => {
+        if (this.workingSetDto && this.workingSetDto.workingSetVersions) {
+          const workingSetVersions = this.workingSetDto.workingSetVersions;
+          workingSetVersions.forEach(workingSetVersion => {
+            workingSetVersion.id = null;
+            workingSetVersion.createdBy = null;
+            workingSetVersion.createdOn = null;
+            workingSetVersion.modifiedBy = null;
+            workingSetVersion.modifiedOn = null;
+            workingSetVersion.workingSet = response.id;
+
+            this.workingSetVersionService.save(workingSetVersion).subscribe();
+          });
+        }
+
+        this.project.updateWorkingSets();
+        this.router.navigate(['project']);
+      });
     }
-    else if (this.project.caller === 'category') {
-      this.project.openCategoryPage();
-    }
-    else if (this.project.caller === 'workingSet'){
-      this.project.openWorkingSetPage();
-    }
-    else {
-      this.project.addWorkingSet();
-    }
+  }
+
+  changeWorkingSet(workingSetDto: any) {
+    this.workingSetDto = workingSetDto;
   }
 }

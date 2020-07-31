@@ -14,26 +14,30 @@
         </div>
 
         <div fxFlex="40">
-          <button [matMenuTriggerFor]="menu" mat-button>Add new</button>
+          <button [matMenuTriggerFor]="menu" mat-button>ADD NEW</button>
           <mat-menu #menu="matMenu">
-            <button (click)="addWorkingSet()" mat-menu-item>Working set</button>
-            <button (click)="addRule()" mat-menu-item>Rule</button>
-            <button (click)="addCategory()" mat-menu-item>Category</button>
+            <button [routerLink]="['add-working-set']" mat-menu-item>Working set</button>
+            <button [routerLink]="['add-rule']" mat-menu-item>Rule</button>
+            <button [routerLink]="['add-category']" mat-menu-item>Category</button>
           </mat-menu>
         </div>
       </div>
 
       <div class="mat-typography">
-        <mat-toolbar class="search-block" style="background-color: white !important;">
-          <mat-toolbar-row style="padding: 0 5px;">
-            <button class="search-icon" mat-icon-button disabled>
-              <mat-icon>search</mat-icon>
-            </button>
-            <input matInput type="text" placeholder="Search" [(ngModel)]="searchText"
-                  style="border: none !important; outline: none !important; font-size: 1rem;">
-            <button mat-button mat-icon-button *ngIf="searchText!=''" (click)="searchClose()" style="flex: auto">
-              <mat-icon>close</mat-icon>
-            </button>
+        <mat-toolbar class="search-block" style="background-color: #CCCCCC !important;">
+          <mat-toolbar-row style="padding: 0 5px; justify-content: center">
+            <div style="background-color: white; border-radius: 15px">
+              <button class="search-icon" disabled mat-icon-button>
+                <mat-icon>search</mat-icon>
+              </button>
+              <input [(ngModel)]="searchText" placeholder="Search"
+                     style="border: none !important; outline: none !important; font-size: 1rem; max-width: 80%;"
+                     type="text">
+              <button (click)="searchClose()" *ngIf="searchText!=''" mat-button mat-icon-button
+                      style="flex: auto">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
           </mat-toolbar-row>
         </mat-toolbar>
       </div>
@@ -42,12 +46,14 @@
         <mat-expansion-panel style="background-color: #CCCCCC; box-shadow: none">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Working sets
+              <strong>Working sets</strong>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-selection-list (click)="openWorkingSetPage()" [multiple]="false">
-            <mat-list-option *ngFor="let workingSet of workingSets">
-              {{workingSet}}
+          <mat-selection-list #workingSetList [multiple]="false">
+            <mat-list-option (click)="disableOthers(ruleList, categoryList)"
+                             *ngFor="let workingSet of workingSets" [routerLink]="['working-set',
+             workingSet.id]">
+              {{workingSet.name}}
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
@@ -55,12 +61,14 @@
         <mat-expansion-panel style="background-color: #CCCCCC; box-shadow: none">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Rules
+              <strong>Rules</strong>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-selection-list (click)="openRulePage()" [multiple]="false">
-            <mat-list-option *ngFor="let rul of rules">
-              {{rul}}
+          <mat-selection-list #ruleList [multiple]="false">
+            <mat-list-option (click)="disableOthers(workingSetList, categoryList)"
+                             *ngFor="let rule of rules"
+                             [routerLink]="['rule', rule.id]">
+              {{rule.name}}
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
@@ -68,12 +76,14 @@
         <mat-expansion-panel style="background-color: #CCCCCC; box-shadow: none">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Categories
+              <strong>Categories</strong>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-selection-list (click)="openCategoryPage()" [multiple]="false">
-            <mat-list-option *ngFor="let category of categories">
-              {{category}}
+          <mat-selection-list #categoryList [multiple]="false">
+            <mat-list-option (click)="disableOthers(workingSetList, ruleList)"
+                             *ngFor="let category of categories" [routerLink]="['category',
+            category.id]">
+              {{category.name}}
             </mat-list-option>
           </mat-selection-list>
         </mat-expansion-panel>
@@ -82,13 +92,7 @@
     </div>
 
     <div style="float: right; width: 80%; height: 100%; overflow-y: scroll">
-      <app-working-set-page *ngIf="flagWorkingSet"></app-working-set-page>
-      <app-rule-page *ngIf="flagRule"></app-rule-page>
-      <app-category-page *ngIf="flagCategory"></app-category-page>
-      <app-add-working-set *ngIf="flagAddWorkingSet"></app-add-working-set>
-      <app-add-rule *ngIf="flagAddRule"></app-add-rule>
-      <app-add-category *ngIf="flagAddCategory"></app-add-category>
-      <app-add-version *ngIf="flagAddVersion"></app-add-version>
+      <router-outlet></router-outlet>
     </div>
   </mat-card>
 </div>

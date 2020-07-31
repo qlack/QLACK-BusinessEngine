@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RulePageComponent } from './rule-page.component';
+import {RulePageComponent} from './rule-page.component';
 
 describe('RulePageComponent', () => {
   let component: RulePageComponent;

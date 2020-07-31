@@ -1,20 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>qlack-be-rules-server</artifactId>
 
-    <parent>
-        <groupId>com.eurodyn.qlack</groupId>
-        <artifactId>qlack-be-rules</artifactId>
-        <version>3.3.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>
-    </parent>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <annotationProcessorPath>
+              <artifactId>mapstruct-processor</artifactId>
+              <groupId>org.mapstruct</groupId>
+              <version>${mapstruct.version}</version>
+            </annotationProcessorPath>
+            <annotationProcessorPath>
+              <artifactId>querydsl-jpa-codegen</artifactId>
+              <groupId>com.querydsl</groupId>
+              <version>${querydsl.version}</version>
+            </annotationProcessorPath>
+            <annotationProcessorPath>
+              <artifactId>querydsl-apt</artifactId>
+              <classifier>jpa</classifier>
+              <groupId>com.querydsl</groupId>
+              <version>${querydsl.version}</version>
+            </annotationProcessorPath>
+            <annotationProcessorPath>
+              <artifactId>lombok</artifactId>
+              <groupId>org.projectlombok</groupId>
+              <version>${lombok.version}</version>
+            </annotationProcessorPath>
+          </annotationProcessorPaths>
+        </configuration>
+        <version>${maven-compiler-plugin.version}</version>
+      </plugin>
+    </plugins>
+  </build>
 
-    <packaging>jar</packaging>
-    <artifactId>qlack-be-rules-server</artifactId>
-    <groupId>com.eurodyn.qlack.qbe</groupId>
-    <version>1.0-SNAPSHOT</version>
+  <dependencies>
+    <!-- Spring Boot -->
+    <dependency>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-data-rest</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-devtools</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <optional>true</optional>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <exclusions>
+        <exclusion>
+          <artifactId>junit-vintage-engine</artifactId>
+          <groupId>org.junit.vintage</groupId>
+        </exclusion>
+      </exclusions>
+      <groupId>org.springframework.boot</groupId>
+      <scope>test</scope>
+    </dependency>
 
+    <!-- Database dependencies -->
+    <dependency>
+      <artifactId>mysql-connector-java</artifactId>
+      <groupId>mysql</groupId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Third-party dependencies -->
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <artifactId>mapstruct</artifactId>
+      <groupId>org.mapstruct</groupId>
+      <version>1.3.0.Final</version>
+    </dependency>
+    <dependency>
+      <artifactId>querydsl-jpa</artifactId>
+      <groupId>com.querydsl</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>querydsl-core</artifactId>
+      <groupId>com.querydsl</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>liquibase-core</artifactId>
+      <groupId>org.liquibase</groupId>
+      <version>3.8.0</version>
+    </dependency>
+
+    <!-- QLACK dependencies -->
+    <dependency>
+      <artifactId>qlack-util-data</artifactId>
+      <groupId>com.eurodyn.qlack.util</groupId>
+      <version>3.2.3</version>
+    </dependency>
+    <dependency>
+      <artifactId>qlack-util-querydsl</artifactId>
+      <groupId>com.eurodyn.qlack.util</groupId>
+      <version>3.2.3</version>
+    </dependency>
+
+    <!-- Test Dependencies -->
+    <dependency>
+      <artifactId>junit</artifactId>
+      <groupId>junit</groupId>
+      <scope>test</scope>
+      <version>4.12</version>
+    </dependency>
+  </dependencies>
+  <groupId>com.eurodyn.qlack.qbe</groupId>
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>jar</packaging>
+
+  <parent>
+    <artifactId>qlack-be-rules</artifactId>
+    <groupId>com.eurodyn.qlack</groupId>
+    <relativePath>../</relativePath>
+    <version>3.3.1-SNAPSHOT</version>
+  </parent>
+
+  <version>1.0-SNAPSHOT</version>
 
 </project>

@@ -1,0 +1,281 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  logicalFilePath="00001.xml"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+  <changeSet author="European Dynamics" id="15713129476666-1">
+
+    <addForeignKeyConstraint baseColumnNames="rule_id" baseTableName="rule_category"
+      constraintName="FK_RULE_ID_RULE_CATEGORY"
+      referencedColumnNames="id" referencedTableName="rule"/>
+
+    <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="rule_category"
+      constraintName="FK_CATEGORY_ID_RULE_CATEGORY"
+      referencedColumnNames="id" referencedTableName="category"/>
+
+    <addForeignKeyConstraint baseColumnNames="working_set_id" baseTableName="working_set_category"
+      constraintName="FK_WORKING_SET_ID_WORKING_SET_CATEGORY"
+      referencedColumnNames="id" referencedTableName="working_set"/>
+
+    <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="working_set_category"
+      constraintName="FK_CATEGORY_ID_WORKING_SET_CATEGORY"
+      referencedColumnNames="id" referencedTableName="category"/>
+
+    <addForeignKeyConstraint baseColumnNames="rule_id" baseTableName="rule_version"
+      constraintName="FK_RULE_ID_RULE_VERSION" deferrable="false"
+      initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+      referencedColumnNames="id" referencedTableName="rule"/>
+
+    <addForeignKeyConstraint baseColumnNames="working_set_id" baseTableName="working_set_version"
+      constraintName="FK_WORKING_SET_ID_WORKING_SET_VERSION" deferrable="false"
+      initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+      referencedColumnNames="id" referencedTableName="working_set"/>
+
+    <createTable tableName="category">
+      <column name="id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="created_by" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="modified_by" type="varchar(255)"/>
+      <column name="modified_on" type="datetime"/>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(255)"/>
+    </createTable>
+
+    <createTable tableName="rule_version">
+      <column name="id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="created_by" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="modified_by" type="varchar(255)"/>
+      <column name="modified_on" type="datetime"/>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(255)"/>
+      <column name="rule_id" type="varchar(255)"/>
+      <column name="dmn_xml" type="clob"/>
+    </createTable>
+
+
+    <createTable tableName="working_set_version">
+      <column name="id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="created_by" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="modified_by" type="varchar(255)"/>
+      <column name="modified_on" type="datetime"/>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(255)"/>
+      <column name="working_set_id" type="varchar(255)"/>
+    </createTable>
+
+    <createTable tableName="rule">
+      <column name="id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="created_by" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="modified_by" type="varchar(255)"/>
+      <column name="modified_on" type="datetime"/>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(255)"/>
+      <column name="status" type="tinyint(1)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="working_set">
+      <column name="id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="created_by" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_on" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="modified_by" type="varchar(255)"/>
+      <column name="modified_on" type="datetime"/>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="varchar(255)"/>
+      <column name="status" type="tinyint(1)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="rule_category">
+      <column name="rule_id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="category_id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="working_set_category">
+      <column name="working_set_id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="category_id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="working_set_version_rule_version">
+      <column name="working_set_version_id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="rule_version_id" type="varchar(255)">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+    </createTable>
+
+
+    <insert tableName="category">
+      <column name="id" value="37b6d430-c1b4-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Category 1"/>
+      <column name="description" value="Test description 1"/>
+    </insert>
+
+    <insert tableName="category">
+      <column name="id" value="37b6d73c-c1b4-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Category 2"/>
+      <column name="description" value="Test description 2"/>
+    </insert>
+
+    <insert tableName="category">
+      <column name="id" value="37b6d84a-c1b4-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Category 3"/>
+      <column name="description" value="Test description 3"/>
+    </insert>
+
+    <insert tableName="rule">
+      <column name="id" value="0e76dd72-c1d7-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Rule 1"/>
+      <column name="description" value="Test description for rule 1"/>
+      <column name="status" value="1"/>
+    </insert>
+
+    <insert tableName="rule">
+      <column name="id" value="0e76e0ba-c1d7-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Rule 2"/>
+      <column name="description" value="Test description for rule 2"/>
+      <column name="status" value="1"/>
+    </insert>
+
+    <insert tableName="working_set">
+      <column name="id" value="29512282-c1e7-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Working set 1"/>
+      <column name="description" value="Test description for working set 1"/>
+      <column name="status" value="1"/>
+    </insert>
+
+    <insert tableName="working_set">
+      <column name="id" value="295124c6-c1e7-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Working set 2"/>
+      <column name="description" value="Test description for working set 2"/>
+      <column name="status" value="1"/>
+    </insert>
+
+    <insert tableName="rule_version">
+      <column name="id" value="0e76e1c8-c1d7-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Rule version 1"/>
+      <column name="description" value="Test description for rule version 1"/>
+      <column name="rule_id" value="0e76dd72-c1d7-11ea-b3de-0242ac130004"/>
+    </insert>
+
+    <insert tableName="rule_version">
+      <column name="id" value="0e76e2ae-c1d7-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Rule version 2"/>
+      <column name="description" value="Test description for rule version 2"/>
+      <column name="rule_id" value="0e76dd72-c1d7-11ea-b3de-0242ac130004"/>
+    </insert>
+
+    <insert tableName="working_set_version">
+      <column name="id" value="295125de-c1e7-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Working set version 1"/>
+      <column name="description" value="Test description for working set version 1"/>
+      <column name="working_set_id" value="29512282-c1e7-11ea-b3de-0242ac130004"/>
+    </insert>
+
+    <insert tableName="working_set_version">
+      <column name="id" value="295127c8-c1e7-11ea-b3de-0242ac130004"/>
+      <column name="created_by" value="SYSTEM"/>
+      <column name="created_on" value="2019-11-22"/>
+      <column name="name" value="Working set version 2"/>
+      <column name="description" value="Test description for working set version 2"/>
+      <column name="working_set_id" value="29512282-c1e7-11ea-b3de-0242ac130004"/>
+    </insert>
+
+    <insert tableName="rule_category">
+      <column name="rule_id" value="0e76dd72-c1d7-11ea-b3de-0242ac130004"/>
+      <column name="category_id" value="37b6d430-c1b4-11ea-b3de-0242ac130004"/>
+    </insert>
+
+    <insert tableName="rule_category">
+      <column name="rule_id" value="0e76dd72-c1d7-11ea-b3de-0242ac130004"/>
+      <column name="category_id" value="37b6d84a-c1b4-11ea-b3de-0242ac130004"/>
+    </insert>
+
+    <insert tableName="working_set_category">
+      <column name="working_set_id" value="295124c6-c1e7-11ea-b3de-0242ac130004"/>
+      <column name="category_id" value="37b6d84a-c1b4-11ea-b3de-0242ac130004"/>
+    </insert>
+
+    <insert tableName="working_set_category">
+      <column name="working_set_id" value="29512282-c1e7-11ea-b3de-0242ac130004"/>
+      <column name="category_id" value="37b6d84a-c1b4-11ea-b3de-0242ac130004"/>
+    </insert>
+
+  </changeSet>
+
+</databaseChangeLog>

@@ -7,49 +7,58 @@
   </div>
 
   <div fxLayout="row wrap">
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Title:
-      </mat-label>
-      <mat-form-field fxFlex="40">
-        <input matInput placeholder="The name of the version">
-      </mat-form-field>
-    </div>
+    <form (ngSubmit)="createVersion()" [formGroup]="addVersionForm" fxFlex="100"
+          fxLayout="row wrap">
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Name:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <input formControlName="name" matInput placeholder="The name of the version" required>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Description:
-      </mat-label>
-      <mat-form-field fxFlex="40">
-        <input matInput placeholder="The description of the version">
-      </mat-form-field>
-    </div>
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Description:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <input formControlName="description" matInput
+                 placeholder="The description of the version">
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Based on:
-      </mat-label>
-      <mat-form-field fxFlex="40">
-        <mat-select>
-          <mat-option *ngFor="let ver of versions" [value]="ver">{{ver}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Based on:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <mat-select (valueChange)="changeVersion($event)" *ngIf="isRule"
+                      [disabled]="!ruleVersionDto" formControlName="basedOn">
+            <mat-option *ngFor="let ver of ruleVersions" [value]="ver">
+              {{ver.name}}
+            </mat-option>
+          </mat-select>
+          <mat-select (valueChange)="changeVersion($event)" *ngIf="!isRule"
+                      [disabled]="!workingSetVersionDto" formControlName="basedOn">
+            <mat-option *ngFor="let ver of workingSetVersions" [value]="ver">
+              {{ver.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row wrap-reverse" fxLayoutAlign="end center" style="margin-top: 1em;">
-      <button (click)="cancel()" fxFlex.xs="100" mat-button
-              style="margin-right: 0.5em" tabindex="-1">
-        CANCEL
-      </button>
-      <button (click)="createVersion()" fxFlex.xs="100" mat-button>
-        CREATE
-      </button>
-    </div>
+      <div fxFlex="100" fxLayout="row wrap-reverse" fxLayoutAlign="end center"
+           style="margin-top: 1em;">
+        <button (click)="cancel()" fxFlex.xs="100" mat-button
+                style="margin-right: 0.5em" tabindex="-1">
+          CANCEL
+        </button>
+        <button [disabled]="!addVersionForm.valid" fxFlex.xs="100" mat-button type="submit">
+          CREATE
+        </button>
+      </div>
+    </form>
 
   </div>
 </div>
-
-<!--<mat-form-field fxFlex="100">-->
-<!--  <mat-label>Based on</mat-label>-->
-
-<!--</mat-form-field>-->

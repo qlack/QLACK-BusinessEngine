@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AddRuleComponent } from './add-rule.component';
+import {AddRuleComponent} from './add-rule.component';
 
 describe('AddRuleComponent', () => {
   let component: AddRuleComponent;

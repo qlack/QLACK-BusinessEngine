@@ -1,12 +1,11 @@
 import {BaseDto} from './base-dto';
-import {RuleDto} from './rule-dto';
 import {CategoryDto} from './category-dto';
+import {WorkingSetVersionDto} from './working-set-version-dto';
 
 export interface WorkingSetDto extends BaseDto {
   name?: string;
   description?: string;
   status?: boolean;
-  version?: string;
-  rules?: RuleDto[];
+  workingSetVersions?: WorkingSetVersionDto[];
   categories?: CategoryDto[];
 }

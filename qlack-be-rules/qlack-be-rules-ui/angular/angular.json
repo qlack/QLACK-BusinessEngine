@@ -21,13 +21,30 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "worker-css.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              },
+              {
+                "glob": "worker-json.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              },
+              {
+                "glob": "worker-xml.js",
+                "input": "./node_modules/ace-builds/src-min/",
+                "output": "/"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/ace-builds/src-min/mode-xml.js"
+            ]
           },
           "configurations": {
             "production": {

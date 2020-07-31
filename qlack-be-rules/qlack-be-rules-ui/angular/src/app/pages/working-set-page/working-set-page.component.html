@@ -3,181 +3,194 @@
   <div fxLayoutAlign="space-between start">
     <div fxFlex="45">
       <mat-card-header>
-        <mat-card-title>WorkingSet001</mat-card-title>
+        <mat-card-title>{{name}}</mat-card-title>
       </mat-card-header>
     </div>
     <div fxFlex="45">
       <mat-form-field style="float: right">
         <mat-label>More actions</mat-label>
         <mat-select>
-          <mat-option (click)="deleteWorkingSet()">
-            <mat-icon>delete</mat-icon>
-            Delete
-          </mat-option>
+          <mat-optgroup label="{{name}}">
+            <mat-option [routerLink]="['add', 2]">
+              <mat-icon>photo_camera</mat-icon>
+              Create version
+            </mat-option>
+            <mat-option (click)="deleteWorkingSet()">
+              <mat-icon>delete</mat-icon>
+              Delete
+            </mat-option>
+          </mat-optgroup>
           <mat-divider inset style="margin-top: 1em;"></mat-divider>
-          <mat-option (click)="createVersion()">
-            <mat-icon>photo_camera</mat-icon>
-            Create version
-          </mat-option>
-          <mat-option (click)="deleteVersion()">
-            <mat-icon>delete</mat-icon>
-            Delete version
-          </mat-option>
+          <mat-optgroup label="{{versionName}}">
+            <mat-option (click)="deleteVersion()" [disabled]="!workingSetVersion">
+              <mat-icon>delete</mat-icon>
+              Delete version
+            </mat-option>
+          </mat-optgroup>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
 
-  <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Title:
-        </mat-label>
-        <mat-form-field fxFlex="50">
-          <input matInput readonly="{{!flag}}" value="WorkingSet001">
-        </mat-form-field>
+  <div fxLayout="row wrap">
+    <form [formGroup]="workingSetForm"
+          fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start">
+
+      <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
+        <div fxFlex="100" fxLayout="row">
+          <mat-label fxFlex="30" fxLayoutAlign="start center">
+            Name:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input formControlName="name" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label fxFlex="30" fxLayoutAlign="start center">
+            Description:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input formControlName="description" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label fxFlex="30" fxLayoutAlign="start center">
+            Active:
+          </mat-label>
+          <mat-checkbox class="fixed-values mat-input-like" color="primary"
+                        formControlName="status">
+          </mat-checkbox>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label fxFlex="30" fxLayoutAlign="start center">
+            Category:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <mat-select [compareWith]="checkCategories" formControlName="categories" multiple>
+              <mat-option *ngFor="let category of allCategories" [value]="category">
+                {{category.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
 
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Description:
-        </mat-label>
-        <mat-form-field fxFlex="50">
-          <input matInput readonly="{{!flag}}" value="This is a working set">
-        </mat-form-field>
+      <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label class="mat-input-like fixed-values" fxFlex="30" fxLayoutAlign="start center">
+            Created by:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input formControlName="createdBy" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label class="mat-input-like fixed-values" fxFlex="30" fxLayoutAlign="start center">
+            Created on:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input [value]="workingSetForm.get('createdOn').value | date:'medium'"
+                   formControlName="createdOn" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label class="mat-input-like fixed-values" fxFlex="30" fxLayoutAlign="start center">
+            Last modified by:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input formControlName="modifiedBy" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label class="mat-input-like fixed-values" fxFlex="30" fxLayoutAlign="start center">
+            Last modified on:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input [value]="workingSetForm.get('modifiedOn').value | date:'medium'"
+                   formControlName="modifiedOn" matInput>
+          </mat-form-field>
+        </div>
+
       </div>
 
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Status:
-        </mat-label>
-        <mat-radio-group [disabled]=!flag aria-label="Select an option" class="mat-input-like fixed-values"
-                         color="primary" fxFlex="50">
-          <mat-radio-button [checked]="true" value="1">Active</mat-radio-button>
-          <mat-radio-button style="padding-left: 10px" value="2">Inactive</mat-radio-button>
-        </mat-radio-group>
+      <mat-divider inset style="margin-top: 1em; margin-bottom: 1em"></mat-divider>
+
+      <div *ngIf="workingSetVersion" fxLayout="row wrap" fxLayoutAlign="space-between start"
+           style="width: 100%;">
+
+        <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-form-field>
+            <mat-select (valueChange)="changeVersion($event)" [value]="workingSetVersion">
+              <mat-option *ngFor="let ver of workingSetVersions" [value]="ver">
+                {{ver.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <input formControlName="currentVersionDescription" matInput style="padding-bottom: 2em"/>
+        </div>
+        <div fxFlex.sm="100" fxFlex.xs="100" style="padding-left: 1em; justify-content: flex-end;">
+          <p *ngIf="workingSetVersion">Created by {{workingSetVersion.createdBy}}
+            on {{workingSetVersion.createdOn | date:'medium'}}</p>
+          <p *ngIf="isModified">Last modified by {{workingSetVersion.modifiedBy}}
+            on {{workingSetVersion.modifiedOn | date:'medium'}}</p>
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start center" style="width: 100%;">
+        <mat-card *ngFor="let index of indexes" fxLayout="row wrap"
+                  style="margin: 1em; background-color: whitesmoke; max-width: 15rem">
+
+          <mat-card-header>
+            <mat-card-title>
+              {{rules[index].name}}
+            </mat-card-title>
+            <mat-card-subtitle>
+              {{ruleVersions[index].name}}
+            </mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-divider inset style="margin-bottom: 1em"></mat-divider>
+
+          <div>
+            <p>{{rules[index].description}}</p>
+            <p style="padding-top: 1em;">{{ruleVersions[index].description}}</p>
+          </div>
+
+          <div class="mat-input-like fixed-values" style="width: 95%; text-align: right">
+
+            <button (click)="editRow(index)" [disabled]="!edit" mat-button>
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button (click)="deleteRow(index)" [disabled]="!edit" mat-button>
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </mat-card>
       </div>
 
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Category:
-        </mat-label>
-        <mat-form-field fxFlex="50">
-          <mat-label>Choose a category</mat-label>
-          <mat-select [disabled]=!flag multiple>
-            <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
-
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Created by:
-        </mat-label>
-        <p class="mat-input-like fixed-values" fxFlex="50">
-          Administrator
-        </p>
+      <div class="fixed-values mat-input-like" fxLayout="row">
+        <button (click)="addRow()" *ngIf="workingSetVersion && edit" mat-button>ADD RULE</button>
       </div>
 
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Created on:
-        </mat-label>
-        <p class="mat-input-like fixed-values" fxFlex="50">
-          Apr 30 2020 4:56 PM
-        </p>
-      </div>
-
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Last modified by:
-        </mat-label>
-        <p class="mat-input-like fixed-values" fxFlex="50">
-          Administrator
-        </p>
-      </div>
-
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Last modified on:
-        </mat-label>
-        <p class="mat-input-like fixed-values" fxFlex="50">
-          May 29 2020 3:34 PM
-        </p>
-      </div>
-
-    </div>
-  </div>
-
-  <mat-divider inset style="margin-top: 1em; margin-bottom: 1em"></mat-divider>
-
-  <div fxLayout="row wrap" fxLayoutAlign="space-between start">
-    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
-      <mat-form-field>
-        <mat-label>Select rule version</mat-label>
-        <mat-select value="Version 2">
-          <mat-option *ngFor="let ver of versions" [value]="ver">{{ver}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <p style="padding-bottom: 2em">This is the version's description</p>
-    </div>
-    <div fxFlex="70" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap"
-         style="padding-left: 1em; justify-content: flex-end;">
-      <p>Created by Local Administrator on Apr 30 2015 4:56 PM</p>
-      <p>Last modified by Local Administrator on Nov 19 2015 11:08 AM</p>
-    </div>
-  </div>
-
-  <div class="fixed-values mat-input-like" fxLayout="row">
-    <button (click)="addRow()" *ngIf=flag mat-button>Add rule</button>
-  </div>
-
-  <div fxLayout="row wrap" fxLayoutAlign="start center">
-    <mat-card *ngFor="let index of indexes" fxFlex="40" fxLayout="row wrap"
-              style="margin: 1em; background-color: whitesmoke; box-shadow: none !important;">
-
-      <mat-card-header>
-        <mat-card-title>
-          {{ruleDto[index].name}}
-        </mat-card-title>
-        <mat-card-subtitle>
-          {{ruleDto[index].version}}
-        </mat-card-subtitle>
-      </mat-card-header>
-
-      <mat-divider inset style="margin-bottom: 1em"></mat-divider>
-
-      <div>
-        <p>Created by Administrator on Apr 30 2015 4:56 PM</p>
-        <p style="padding-top: 1em;">Last modified by Administrator on Nov 19 2015 11:08 AM</p>
-      </div>
-
-      <div class="mat-input-like fixed-values" style="width: 95%; text-align: right">
-
-        <button (click)="editRow(index)" [disabled]="!flag" mat-button>
-          <mat-icon>edit</mat-icon>
+      <div class="page-container" style="width: 95%; text-align: right">
+        <button (click)="editWorkingSet()" *ngIf=!edit mat-button>
+          EDIT
         </button>
-
-        <button (click)="deleteRow(index)" [disabled]="!flag" mat-button style="margin-left: 1.5em">
-          <mat-icon>close</mat-icon>
+        <button (click)="cancel()" *ngIf=edit mat-button>
+          CANCEL
+        </button>
+        <button (click)="editComplete()" *ngIf=edit [disabled]="!workingSetForm.valid" mat-button
+                style="margin-left: 1.5em">
+          SAVE
         </button>
       </div>
-    </mat-card>
-  </div>
-
-  <div class="page-container" style="width: 95%; text-align: right">
-    <button (click)="editWorkingSet()" *ngIf=!flag mat-button>
-      EDIT
-    </button>
-    <button (click)="editWorkingSet()" *ngIf=flag mat-button>
-      CANCEL
-    </button>
-    <button (click)="editWorkingSet()" *ngIf=flag mat-button style="margin-left: 1.5em">
-      SAVE
-    </button>
+    </form>
   </div>
 </div>

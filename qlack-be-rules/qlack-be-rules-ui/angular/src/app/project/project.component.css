@@ -17,3 +17,11 @@
 .mat-expansion-panel-spacing {
   margin: 0;
 }
+
+.mat-list-base {
+  padding-top: 0 !important;
+}
+
+.mat-expansion-panel-header {
+  height: 50px !important;
+}

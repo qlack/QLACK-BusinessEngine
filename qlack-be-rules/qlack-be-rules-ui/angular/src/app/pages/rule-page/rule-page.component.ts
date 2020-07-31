@@ -1,8 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectComponent} from '../../project/project.component';
 import {ConfirmPopupComponent} from '../../confirm-popup/confirm-popup.component';
 import {MatDialog} from '@angular/material/dialog';
-import dmn from '../../dmn';
+import {CategoryService} from '../../services/category.service';
+import {CategoryDto} from '../../dto/category-dto';
+import {RuleDto} from '../../dto/rule-dto';
+import {RuleVersionDto} from '../../dto/rule-version-dto';
+import {ActivatedRoute, Router} from '@angular/router';
+import {RuleService} from '../../services/rule.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {RuleVersionService} from '../../services/rule-version.service';
+import 'brace';
+import 'brace/mode/xml';
+import 'brace/theme/eclipse';
 
 @Component({
   selector: 'app-rule-page',
@@ -11,118 +21,93 @@ import dmn from '../../dmn';
 })
 
 export class RulePageComponent implements OnInit {
-  dmn = dmn;
-  dmnXml = `<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
-             id="definitions_1hemumb" name="definitions" namespace="http://camunda.org/schema/1.0/dmn">
-    <decision id="dish" name="Dish">
-        <decisionTable id="decisionTable">
-            <input id="input1" label="Season" camunda:inputVariable="">
-                <inputExpression id="inputExpression1" typeRef="string">
-                    <text>season</text>
-                </inputExpression>
-            </input>
-            <input id="InputClause_0rwlbk7" label="How many guests" camunda:inputVariable="">
-                <inputExpression id="LiteralExpression_0h5951a" typeRef="integer">
-                    <text>guestCount</text>
-                </inputExpression>
-            </input>
-            <output id="output1" label="Dish" name="desiredDish" typeRef="string"/>
-            <rule id="row-129502239-1">
-                <description></description>
-                <inputEntry id="UnaryTests_0e47zyl">
-                    <text>"Fall"</text>
-                </inputEntry>
-                <inputEntry id="UnaryTests_1132erh">
-                    <text>&lt;= 8</text>
-                </inputEntry>
-                <outputEntry id="LiteralExpression_0wv4x30">
-                    <text>"Spareribs"</text>
-                </outputEntry>
-            </rule>
-            <rule id="row-129502239-2">
-                <inputEntry id="UnaryTests_0iwabd6">
-                    <text>"Winter"</text>
-                </inputEntry>
-                <inputEntry id="UnaryTests_10qbns7">
-                    <text>&lt;= 8</text>
-                </inputEntry>
-                <outputEntry id="LiteralExpression_0ysj59c">
-                    <text>"Roastbeef"</text>
-                </outputEntry>
-            </rule>
-            <rule id="row-129502239-3">
-                <inputEntry id="UnaryTests_1nu2fxo">
-                    <text>"Spring"</text>
-                </inputEntry>
-                <inputEntry id="UnaryTests_1b4mcpz">
-                    <text>&lt;= 4</text>
-                </inputEntry>
-                <outputEntry id="LiteralExpression_1osqv9r">
-                    <text>"Dry Aged Gourmet Steak"</text>
-                </outputEntry>
-            </rule>
-            <rule id="row-129502239-4">
-                <description>Save money</description>
-                <inputEntry id="UnaryTests_0vux2zw">
-                    <text>"Spring"</text>
-                </inputEntry>
-                <inputEntry id="UnaryTests_07v2n3t">
-                    <text>[5..8]</text>
-                </inputEntry>
-                <outputEntry id="LiteralExpression_11v4xrs">
-                    <text>"Steak"</text>
-                </outputEntry>
-            </rule>
-            <rule id="row-129502239-5">
-                <description>Less effort</description>
-                <inputEntry id="UnaryTests_0p7gr7e">
-                    <text>"Fall","Winter","Spring"</text>
-                </inputEntry>
-                <inputEntry id="UnaryTests_0zebpmx">
-                    <text>&gt; 8</text>
-                </inputEntry>
-                <outputEntry id="LiteralExpression_0maai06">
-                    <text>"Stew"</text>
-                </outputEntry>
-            </rule>
-            <rule id="row-129502239-6">
-                <description>Hey, why not?</description>
-                <inputEntry id="UnaryTests_1e1us67">
-                    <text>"Summer"</text>
-                </inputEntry>
-                <inputEntry id="UnaryTests_0q3acue">
-                    <text></text>
-                </inputEntry>
-                <outputEntry id="LiteralExpression_0ewtv5x">
-                    <text>"Light Salad and nice Steak"</text>
-                </outputEntry>
-            </rule>
-        </decisionTable>
-    </decision>
-</definitions>
-`;
-  flag = false;
-  categories = ['Category 1', 'Category 2', 'Category 3'];
-  versions = ['Version 1', 'Version 2', 'Version 3'];
+
+  ruleForm = this.fb.group({
+    id: [''],
+    name: ['', Validators.required],
+    description: [''],
+    status: [false],
+    ruleVersions: [],
+    categories: [null],
+    currentVersionDescription: [''],
+    createdBy: [''],
+    createdOn: [''],
+    modifiedBy: [''],
+    modifiedOn: ['']
+  });
+
+  id: string;
+  name: string;
+  versionName: string;
+  edit = false;
+  isModified = false;
+
+  dmn = '';
+
+  version: RuleVersionDto;
+  rule: RuleDto;
+
+  ruleCategories: CategoryDto[];
+  allCategories: CategoryDto[];
+  ruleVersions: RuleVersionDto[];
 
   constructor(
     private project: ProjectComponent,
-    private dialog: MatDialog
-  ) { }
-
-  ngOnInit(): void {
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private categoryService: CategoryService,
+    private ruleService: RuleService,
+    private ruleVersionService: RuleVersionService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
   }
 
-  editRule() {
-    this.flag = !this.flag;
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.ruleForm.reset();
+      this.id = params.id;
+
+      this.ruleService.get(this.id).subscribe(response => {
+        this.rule = response;
+        this.name = response.name;
+
+        this.version = response.ruleVersions[response.ruleVersions.length - 1];
+        this.initiate();
+
+        this.ruleCategories = response.categories;
+        this.ruleVersions = response.ruleVersions;
+
+        this.ruleForm.patchValue(response);
+        this.ruleForm.disable();
+        this.edit = false;
+      });
+    });
+
+    this.categoryService.getAllSorted().subscribe(response =>
+      this.allCategories = response);
+  }
+
+  initiate() {
+    if (this.version) {
+      this.versionName = this.version.name;
+      this.ruleForm.get('currentVersionDescription').setValue(this.version.description);
+      this.isModified = !!this.version.modifiedBy;
+      if (this.version.dmnXml) {
+        this.dmn = this.version.dmnXml;
+      } else {
+        this.dmn = '';
+      }
+    } else {
+      this.versionName = 'Rule version';
+    }
   }
 
   deleteRule() {
     const dialogRef = this.dialog.open(ConfirmPopupComponent, {
       width: '350px',
       data: {
-        title: 'Delete rule',
+        name: 'Delete rule',
         text: 'Are you sure, you want to delete this rule?',
         buttonRight: 'YES',
         buttonLeft: 'NO'
@@ -131,7 +116,10 @@ export class RulePageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(data => {
       if (data === 'OK') {
-        this.project.openRulePage();
+        this.ruleService.delete(this.id).subscribe(response => {
+          this.project.updateRules();
+          this.router.navigate(['project']);
+        });
       }
     });
   }
@@ -140,7 +128,7 @@ export class RulePageComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmPopupComponent, {
       width: '350px',
       data: {
-        title: 'Delete version',
+        name: 'Delete version',
         text: 'Are you sure, you want to delete this version?',
         buttonRight: 'YES',
         buttonLeft: 'NO'
@@ -149,13 +137,84 @@ export class RulePageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(data => {
       if (data === 'OK') {
-        this.project.openRulePage();
+        this.ruleVersionService.delete(this.version.id).subscribe(response =>
+          window.location.reload()
+        );
       }
     });
   }
 
-  createVersion() {
-    this.project.addVersion('rule');
+  editRule() {
+    this.edit = !this.edit;
+    this.ruleForm.get('name').enable();
+    this.ruleForm.get('description').enable();
+    this.ruleForm.get('status').enable();
+    this.ruleForm.get('categories').enable();
+    this.ruleForm.get('currentVersionDescription').enable();
   }
 
+  cancel() {
+    this.ruleForm.patchValue(this.rule);
+    if (this.version && this.version.dmnXml) {
+      this.dmn = this.version.dmnXml;
+    } else {
+      this.dmn = '';
+    }
+
+    this.ruleForm.get('name').disable();
+    this.ruleForm.get('description').disable();
+    this.ruleForm.get('status').disable();
+    this.ruleForm.get('categories').disable();
+    this.ruleForm.get('currentVersionDescription').disable();
+    this.edit = !this.edit;
+  }
+
+  editComplete() {
+    if (this.ruleForm.valid) {
+      if (this.version) {
+        if (this.dmn || this.version.dmnXml) {
+          this.version.dmnXml = this.dmn;
+        }
+        this.version.description = this.ruleForm.get('currentVersionDescription').value;
+        this.ruleVersionService.save(this.version).subscribe();
+      }
+
+      this.ruleForm.enable();
+      const ruleDto: RuleDto = this.ruleForm.value;
+      this.ruleService.save(ruleDto).subscribe(response =>
+        window.location.reload()
+      );
+    }
+  }
+
+  checkCategories(c1: any, c2: any) {
+    return (c1 && c2) ? (c1.id === c2.id) : false;
+  }
+
+  changeVersion(versionDto: RuleVersionDto) {
+    this.version = versionDto;
+    this.initiate();
+  }
+
+  async inputFile(event) {
+    const file = event.target.files[0];
+    this.dmn = await this.readFileContent(file);
+  }
+
+  readFileContent(file: File): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      if (!file) {
+        resolve('');
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const text = reader.result.toString();
+        resolve(text);
+      };
+
+      reader.readAsText(file);
+    });
+  }
 }

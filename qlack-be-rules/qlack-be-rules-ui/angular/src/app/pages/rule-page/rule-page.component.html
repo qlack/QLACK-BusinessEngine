@@ -1,156 +1,178 @@
+<script charset="utf-8" src="./node_modules/ace-builds/src-min/mode-xml.js"
+        type="text/javascript"></script>
 <div class="page-container">
 
   <div fxLayoutAlign="space-between start">
     <div fxFlex="45">
       <mat-card-header>
-        <mat-card-title>Rule001</mat-card-title>
+        <mat-card-title>{{name}}</mat-card-title>
       </mat-card-header>
     </div>
     <div fxFlex="45">
       <mat-form-field style="float: right">
         <mat-label>More actions</mat-label>
         <mat-select>
-          <mat-option (click)="deleteRule()">
-            <mat-icon>delete</mat-icon>
-            Delete
-          </mat-option>
+          <mat-optgroup label="{{name}}">
+            <mat-option [routerLink]="['add', 1]">
+              <mat-icon>photo_camera</mat-icon>
+              Create version
+            </mat-option>
+            <mat-option (click)="deleteRule()">
+              <mat-icon>delete</mat-icon>
+              Delete
+            </mat-option>
+          </mat-optgroup>
           <mat-divider style="margin-top: 1em;"></mat-divider>
-          <mat-option (click)="createVersion()">
-            <mat-icon>photo_camera</mat-icon>
-            Create version
-          </mat-option>
-          <mat-option (click)="deleteVersion()">
-            <mat-icon>delete</mat-icon>
-            Delete version
-          </mat-option>
+          <mat-optgroup label="{{versionName}}">
+            <mat-option (click)="deleteVersion()" [disabled]="!version">
+              <mat-icon>delete</mat-icon>
+              Delete version
+            </mat-option>
+          </mat-optgroup>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
 
-  <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Title:
-        </mat-label>
-        <mat-form-field fxFlex="50">
-          <input matInput readonly="{{!flag}}" value="Rule001">
-        </mat-form-field>
+  <div fxLayout="row wrap">
+    <form (ngSubmit)="editComplete()" [formGroup]="ruleForm"
+          fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start">
+
+      <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
+        <div fxFlex="100" fxLayout="row">
+          <mat-label fxFlex="30" fxLayoutAlign="start center">
+            Name:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input formControlName="name" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label fxFlex="30" fxLayoutAlign="start center">
+            Description:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input formControlName="description" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label fxFlex="30" fxLayoutAlign="start center">
+            Active:
+          </mat-label>
+          <mat-checkbox class="fixed-values mat-input-like" color="primary"
+                        formControlName="status">
+          </mat-checkbox>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label fxFlex="30" fxLayoutAlign="start center">
+            Category:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <mat-select [compareWith]="checkCategories" formControlName="categories" multiple>
+              <mat-option *ngFor="let category of allCategories" [value]="category">
+                {{category.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
 
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Description:
-        </mat-label>
-        <mat-form-field fxFlex="50">
-          <input matInput readonly="{{!flag}}" value="This is a rule">
-        </mat-form-field>
+      <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label class="mat-input-like fixed-values" fxFlex="30" fxLayoutAlign="start center">
+            Created by:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input formControlName="createdBy" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label class="mat-input-like fixed-values" fxFlex="30" fxLayoutAlign="start center">
+            Created on:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input [value]="ruleForm.get('createdOn').value | date:'medium'"
+                   formControlName="createdOn" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label class="mat-input-like fixed-values" fxFlex="30" fxLayoutAlign="start center">
+            Last modified by:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input formControlName="modifiedBy" matInput>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxLayout="row">
+          <mat-label class="mat-input-like fixed-values" fxFlex="30" fxLayoutAlign="start center">
+            Last modified on:
+          </mat-label>
+          <mat-form-field fxFlex="50">
+            <input [value]="ruleForm.get('modifiedOn').value | date:'medium'"
+                   formControlName="modifiedOn" matInput>
+          </mat-form-field>
+        </div>
+
       </div>
 
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Status:
-        </mat-label>
-        <mat-radio-group [disabled]=!flag aria-label="Select an option" class="mat-input-like fixed-values"
-                         color="primary" fxFlex="50">
-          <mat-radio-button [checked]="true" value="1">Active</mat-radio-button>
-          <mat-radio-button style="padding-left: 10px" value="2">Inactive</mat-radio-button>
-        </mat-radio-group>
+      <mat-divider inset style="margin-top: 1em; margin-bottom: 1em"></mat-divider>
+
+      <div *ngIf="version" fxLayout="row wrap" fxLayoutAlign="space-between start"
+           style="width: 100%;">
+
+        <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
+          <mat-form-field>
+            <mat-select (valueChange)="changeVersion($event)" [value]="version">
+              <mat-option *ngFor="let ver of ruleVersions" [value]="ver">
+                {{ver.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <input formControlName="currentVersionDescription" matInput style="padding-bottom: 2em"/>
+        </div>
+        <div fxFlex.sm="100" fxFlex.xs="100"
+             style="padding-left: 1em; justify-content: flex-end;">
+          <p *ngIf="version">Created by {{version.createdBy}}
+            on {{version.createdOn | date:'medium'}}</p>
+          <p *ngIf="isModified">Last modified by {{version.modifiedBy}}
+            on {{version.modifiedOn | date:'medium'}}</p>
+        </div>
+
+        <div *ngIf="version" style="padding-top: 2em; width: 100%;">
+          <mat-label>
+            DMN xml file
+          </mat-label>
+          <div [(text)]="dmn"
+               [mode]="'xml'" [readOnly]="!edit" [theme]="'eclipse'" ace-editor
+               style="border: 1px solid lightgray;">{{dmn}}</div>
+        </div>
       </div>
 
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Category:
-        </mat-label>
-        <mat-form-field fxFlex="50">
-          <mat-label>Choose a category</mat-label>
-          <mat-select [disabled]=!flag multiple>
-            <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="page-container" style="width: 95%; text-align: right">
+        <button (click)="editRule()" *ngIf=!edit mat-button style="vertical-align: top;">
+          EDIT
+        </button>
+        <button (click)="cancel()" *ngIf=edit mat-button style=" vertical-align: top;">
+          CANCEL
+        </button>
+        <button *ngIf=edit mat-button style="margin-left: 1.5em" type="submit">
+          SAVE
+        </button>
       </div>
-    </div>
-
-    <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
-
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Created by:
-        </mat-label>
-        <p class="mat-input-like fixed-values" fxFlex="50">
-          Administrator
-        </p>
-      </div>
-
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Created on:
-        </mat-label>
-        <p class="mat-input-like fixed-values" fxFlex="50">
-          Apr 30 2020 4:56 PM
-        </p>
-      </div>
-
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Last modified by:
-        </mat-label>
-        <p class="mat-input-like fixed-values" fxFlex="50">
-          Administrator
-        </p>
-      </div>
-
-      <div fxFlex="100" fxLayout="row">
-        <mat-label fxFlex="30" fxLayoutAlign="start center">
-          Last modified on:
-        </mat-label>
-        <p class="mat-input-like fixed-values" fxFlex="50">
-          May 29 2020 3:34 PM
-        </p>
-      </div>
-
+    </form>
+    <div *ngIf="version && edit" fxFlex="100" fxLayout="row">
+      <input #xmlInput (change)="inputFile($event)" accept=".xml" hidden type="file"/>
+      <button (click)="xmlInput.click()" mat-button>
+        UPLOAD A DMN XML FILE
+      </button>
     </div>
   </div>
 
-  <mat-divider inset style="margin-top: 1em; margin-bottom: 1em"></mat-divider>
-
-  <div fxLayout="row wrap" fxLayoutAlign="space-between start">
-    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap">
-      <mat-form-field>
-        <mat-label>Select rule version</mat-label>
-        <mat-select value="Version 2">
-          <mat-option *ngFor="let ver of versions" [value]="ver">{{ver}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <p style="padding-bottom: 2em">This is the version's description</p>
-    </div>
-    <div fxFlex="70" fxFlex.sm="100" fxFlex.xs="100" fxLayout="row wrap"
-         style="padding-left: 1em; justify-content: flex-end;">
-      <p>Created by Local Administrator on Apr 30 2015 4:56 PM</p>
-      <p>Last modified by Local Administrator on Nov 19 2015 11:08 AM</p>
-    </div>
-  </div>
-
-  <div style="padding-top: 2em; width: 100%;">
-    <mat-label>
-      DMN xml file
-    </mat-label>
-    <ngx-editor [ngModel]="dmn" *ngIf="flag">
-    </ngx-editor>
-<!--    <textarea style="border: 1px solid lightgray;" matInput rows="12" [disabled]=!flag>{{dmn}}</textarea>-->
-  </div>
-
-  <div class="page-container" style="width: 95%; text-align: right">
-    <button (click)="editRule()" *ngIf=!flag mat-button style="vertical-align: top;">
-      EDIT
-    </button>
-    <button (click)="editRule()" *ngIf=flag mat-button style=" vertical-align: top;">
-      CANCEL
-    </button>
-    <button (click)="editRule()" *ngIf=flag
-            mat-button style="margin-left: 1.5em">
-      SAVE
-    </button>
-  </div>
 </div>

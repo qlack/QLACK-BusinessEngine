@@ -12,43 +12,44 @@ export class CrudService<T> {
   }
 
   save(object: T) {
-    return this.http.post(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}`, object);
+    return this.http.post<T>(`${AppConstants.API_ROOT}/${this.endpoint}`, object);
   }
 
   getAll(queryString?: string): Observable<QPageableReply<T>> {
     if (queryString) {
-      return this.http.get<QPageableReply<T>>(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}?${queryString}`);
+      return this.http.get<QPageableReply<T>>(
+        `${AppConstants.API_ROOT}/${this.endpoint}?${queryString}`);
     } else {
-      return this.http.get<QPageableReply<T>>(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}`);
+      return this.http.get<QPageableReply<T>>(`${AppConstants.API_ROOT}/${this.endpoint}`);
     }
   }
 
   getAllSorted(queryString?: string): Observable<T[]> {
     if (queryString) {
-      return this.http.get<T[]>(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}/sorted?${queryString}`);
+      return this.http.get<T[]>(`${AppConstants.API_ROOT}/${this.endpoint}/sorted?${queryString}`);
     } else {
-      return this.http.get<T[]>(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}/sorted`);
+      return this.http.get<T[]>(`${AppConstants.API_ROOT}/${this.endpoint}/sorted`);
     }
   }
 
   get(id: any): Observable<T> {
-    return this.http.get<T>(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}/${id}`);
+    return this.http.get<T>(`${AppConstants.API_ROOT}/${this.endpoint}/${id}`);
   }
 
   getFirst(): Observable<T> {
-    return this.http.get<T>(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}`);
+    return this.http.get<T>(`${AppConstants.API_ROOT}/${this.endpoint}`);
   }
 
   delete(id: any): Observable<any> {
-    return this.http.delete(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}/${id}`);
+    return this.http.delete(`${AppConstants.API_ROOT}/${this.endpoint}/${id}`);
   }
 
   deleteAll(): Observable<any> {
-    return this.http.delete(`${AppConstants.API_SECURED_ROOT}/${this.endpoint}`);
+    return this.http.delete(`${AppConstants.API_ROOT}/${this.endpoint}`);
   }
 
   upload(form: FormGroup): Observable<any> {
     return this.qForms.uploadForm(this.http, form,
-      `${AppConstants.API_SECURED_ROOT}/${this.endpoint}`, false);
+      `${AppConstants.API_ROOT}/${this.endpoint}`, false);
   }
 }

@@ -1,0 +1,19 @@
+# spring properties
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  datasource:
+    name: qbeDS
+    url: jdbc:mysql://localhost:3306/qbe?autoReconnect=true&createDatabaseIfNotExist=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: jijikos
+    initialization-mode: always
+    hikari:
+      connection-timeout: 60000
+      maximum-pool-size: 100
+      register-mbeans: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+    show-sql: true

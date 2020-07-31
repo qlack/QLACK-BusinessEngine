@@ -1,7 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {RuleDto} from '../../dto/rule-dto';
+import {RuleService} from '../../services/rule.service';
+import {RuleVersionService} from '../../services/rule-version.service';
+import {RuleVersionDto} from '../../dto/rule-version-dto';
 
 @Component({
   selector: 'app-add-rule-popup',
@@ -11,28 +14,36 @@ import {RuleDto} from '../../dto/rule-dto';
 export class AddRulePopupComponent implements OnInit {
 
   createRuleForm = this.fb.group({
-    name: ['', Validators.required],
+    rule: ['', Validators.required],
     version: ['', Validators.required]
   });
 
-  name: string;
-  version: string;
+  allRules: RuleDto[];
+  allVersions: RuleVersionDto[];
+
+  r = '';
+  v = '';
+
+  rule: RuleDto;
+  version: RuleVersionDto;
+
   cancelButton = 'CANCEL';
   okButton = 'ADD';
   title = 'New rule';
   subtitle = 'Add a new rule to the working set';
 
-  versions = ['Version 1', 'Version 2', 'Version 3'];
-  rules = ['Rule 1', 'Rule 2', 'Rule 3'];
-
   constructor(
     @Inject(MAT_DIALOG_DATA) private data,
+    private ruleService: RuleService,
+    private ruleVersionService: RuleVersionService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<AddRulePopupComponent>
   ) {
     if (data) {
-      this.name = data.name;
+      this.rule = data.rule;
+      this.r = this.rule.name;
       this.version = data.version;
+      this.v = this.version.name;
       this.title = 'Edit rule';
       this.subtitle = 'Edit the working set rule';
       this.okButton = 'EDIT';
@@ -40,6 +51,9 @@ export class AddRulePopupComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.ruleService.getAllSorted().subscribe(response =>
+      this.allRules = response
+    );
   }
 
   cancel() {
@@ -48,8 +62,19 @@ export class AddRulePopupComponent implements OnInit {
 
   add() {
     if (this.createRuleForm.valid) {
-      const ruleDto: RuleDto = this.createRuleForm.value;
-      this.dialogRef.close(ruleDto);
+      const data = {
+        rule: this.createRuleForm.get('rule'),
+        version: this.createRuleForm.get('version')
+      };
+      this.dialogRef.close(data);
     }
+  }
+
+  ruleSelect(ruleDto: RuleDto) {
+    this.rule = ruleDto;
+
+    this.ruleVersionService.getByRule(this.rule.id).subscribe(response =>
+      this.allVersions = response
+    );
   }
 }

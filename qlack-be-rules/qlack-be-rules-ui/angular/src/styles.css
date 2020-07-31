@@ -22,7 +22,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-input-like {
   padding-bottom: 1.34375em !important;
-  border-top: .84375em solid transparent !important;
 }
 
 .fixed-values {
@@ -31,4 +30,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-list-base .mat-list-item .mat-list-item-content {
   padding: 0 !important
+}
+
+.mat-form-field-infix {
+  border-top: 0 solid transparent;
 }

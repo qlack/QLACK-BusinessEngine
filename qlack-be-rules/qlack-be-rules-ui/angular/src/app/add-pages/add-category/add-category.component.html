@@ -7,33 +7,36 @@
   </div>
 
   <div fxLayout="row wrap">
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Title:
-      </mat-label>
-      <mat-form-field fxFlex="40">
-        <input matInput placeholder="The title of the category">
-      </mat-form-field>
-    </div>
+    <form (ngSubmit)="addCategory()" [formGroup]="addCategoryForm" fxFlex="100" fxLayout="row wrap">
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Name:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <input formControlName="name" matInput placeholder="The name of the category" required>
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row">
-      <mat-label fxFlex="20" fxLayoutAlign="start center">
-        Description:
-      </mat-label>
-      <mat-form-field fxFlex="40">
-        <input matInput placeholder="The description of the category">
-      </mat-form-field>
-    </div>
+      <div fxFlex="100" fxLayout="row">
+        <mat-label fxFlex="20" fxLayoutAlign="start center">
+          Description:
+        </mat-label>
+        <mat-form-field fxFlex="40">
+          <input formControlName="description" matInput
+                 placeholder="The description of the category">
+        </mat-form-field>
+      </div>
 
-    <div fxFlex="100" fxLayout="row wrap-reverse" fxLayoutAlign="end center" style="margin-top: 1em;">
-      <button (click)="cancel()" fxFlex.xs="100" mat-button
-              style="margin-right: 0.5em" tabindex="-1">
-        CANCEL
-      </button>
-      <button (click)="addCategory()" fxFlex.xs="100" mat-button>
-        CREATE
-      </button>
-    </div>
-
+      <div fxFlex="100" fxLayout="row wrap-reverse" fxLayoutAlign="end center"
+           style="margin-top: 1em;">
+        <button (click)="cancel()" fxFlex.xs="100" mat-button
+                style="margin-right: 0.5em" tabindex="-1">
+          CANCEL
+        </button>
+        <button [disabled]="!addCategoryForm.valid" fxFlex.xs="100" mat-button type="submit">
+          CREATE
+        </button>
+      </div>
+    </form>
   </div>
 </div>
