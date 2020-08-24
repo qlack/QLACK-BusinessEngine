@@ -14,9 +14,8 @@
   <packaging>pom</packaging>
 
   <parent>
-    <artifactId>QLACK-BusinessEngine</artifactId>
     <groupId>com.eurodyn.qlack</groupId>
-    <relativePath>../</relativePath>
+    <artifactId>QLACK-BusinessEngine</artifactId>
     <version>3.3.1-SNAPSHOT</version>
   </parent>
 
