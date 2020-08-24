@@ -3,7 +3,7 @@
 ## Architecture 
 The architecture of Qlack Business Engine forms module is described in the following diagram.
 
-![qbe-forms-arch](https://github.com/qlack/QLACK-BusinessEngine/tree/master/qlack-be-forms/qlack-be-forms-server/src/main/resources/images/qbe-forms-arch.png)
+![qbe-forms-arch](https://github.com/qlack/QLACK-BusinessEngine/blob/master/qlack-be-forms/qlack-be-forms-server/src/main/resources/images/qbe-forms-arch.png?raw=true)
 
 
 
