@@ -4,6 +4,7 @@ import com.eurodyn.qlack.rulesdemo.dto.RuleVersionDTO;
 import com.eurodyn.qlack.rulesdemo.model.RuleVersion;
 import com.eurodyn.qlack.rulesdemo.service.RuleVersionService;
 import com.querydsl.core.types.Predicate;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -45,7 +51,11 @@ public class RuleVersionController {
 
     @PostMapping
     public RuleVersionDTO upload(@Valid @RequestBody RuleVersionDTO ruleVersionDTO) {
-        return ruleVersionService.save(ruleVersionDTO);
+        if (ruleVersionService.isXmlWellFormed(ruleVersionDTO.getDmnXml())) {
+            return ruleVersionService.save(ruleVersionDTO);
+        } else {
+            throw new IllegalArgumentException("The Xml is not well formed");
+        }
     }
 
     @DeleteMapping("{versionId}")
