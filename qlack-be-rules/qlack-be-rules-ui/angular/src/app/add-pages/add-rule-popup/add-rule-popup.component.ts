@@ -21,9 +21,6 @@ export class AddRulePopupComponent implements OnInit {
   allRules: RuleDto[];
   allVersions: RuleVersionDto[];
 
-  r = '';
-  v = '';
-
   rule: RuleDto;
   version: RuleVersionDto;
 
@@ -41,19 +38,15 @@ export class AddRulePopupComponent implements OnInit {
   ) {
     if (data) {
       this.rule = data.rule;
-      this.r = this.rule.name;
       this.version = data.version;
-      this.v = this.version.name;
       this.title = 'Edit rule';
       this.subtitle = 'Edit the working set rule';
       this.okButton = 'EDIT';
     }
   }
 
-  ngOnInit(): void {
-    this.ruleService.getAllSorted().subscribe(response =>
-      this.allRules = response
-    );
+  private static equalObjects(rule1, rule2) {
+    return rule1.id === rule2.id;
   }
 
   cancel() {
@@ -76,5 +69,21 @@ export class AddRulePopupComponent implements OnInit {
     this.ruleVersionService.getByRule(this.rule.id).subscribe(response =>
       this.allVersions = response
     );
+  }
+
+  ngOnInit(): void {
+    this.ruleService.getAllSorted().subscribe(response => {
+      this.allRules = response;
+      this.allRules.forEach(rule => {
+        if (AddRulePopupComponent.equalObjects(rule, this.rule)) {
+          this.allVersions = rule.ruleVersions;
+          this.allVersions.forEach(version => {
+            if (AddRulePopupComponent.equalObjects(version, this.version)) {
+              this.createRuleForm.patchValue({rule: rule, version: version});
+            }
+          })
+        }
+      });
+    });
   }
 }

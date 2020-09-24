@@ -9,14 +9,14 @@
 
     <mat-form-field fxFlex="100">
       <mat-label>Name</mat-label>
-      <mat-select (valueChange)="ruleSelect($event)" [value]="r" formControlName="rule" required>
+      <mat-select (valueChange)="ruleSelect($event)" formControlName="rule" required>
         <mat-option *ngFor="let rul of allRules" [value]="rul">{{rul.name}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field fxFlex="100">
       <mat-label>Version</mat-label>
-      <mat-select [disabled]="!rule" [value]="v" formControlName="version" required>
+      <mat-select [disabled]="!rule" formControlName="version" required>
         <mat-option *ngFor="let ver of allVersions" [value]="ver">{{ver.name}}</mat-option>
       </mat-select>
     </mat-form-field>
