@@ -6,32 +6,6 @@
 
   <changeSet author="European Dynamics" id="15713129476666-1">
 
-    <addForeignKeyConstraint baseColumnNames="rule_id" baseTableName="rule_category"
-      constraintName="FK_RULE_ID_RULE_CATEGORY"
-      referencedColumnNames="id" referencedTableName="rule"/>
-
-    <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="rule_category"
-      constraintName="FK_CATEGORY_ID_RULE_CATEGORY"
-      referencedColumnNames="id" referencedTableName="category"/>
-
-    <addForeignKeyConstraint baseColumnNames="working_set_id" baseTableName="working_set_category"
-      constraintName="FK_WORKING_SET_ID_WORKING_SET_CATEGORY"
-      referencedColumnNames="id" referencedTableName="working_set"/>
-
-    <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="working_set_category"
-      constraintName="FK_CATEGORY_ID_WORKING_SET_CATEGORY"
-      referencedColumnNames="id" referencedTableName="category"/>
-
-    <addForeignKeyConstraint baseColumnNames="rule_id" baseTableName="rule_version"
-      constraintName="FK_RULE_ID_RULE_VERSION" deferrable="false"
-      initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
-      referencedColumnNames="id" referencedTableName="rule"/>
-
-    <addForeignKeyConstraint baseColumnNames="working_set_id" baseTableName="working_set_version"
-      constraintName="FK_WORKING_SET_ID_WORKING_SET_VERSION" deferrable="false"
-      initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
-      referencedColumnNames="id" referencedTableName="working_set"/>
-
     <createTable tableName="category">
       <column name="id" type="varchar(255)">
         <constraints nullable="false" primaryKey="true"/>
@@ -69,7 +43,6 @@
       <column name="rule_id" type="varchar(255)"/>
       <column name="dmn_xml" type="clob"/>
     </createTable>
-
 
     <createTable tableName="working_set_version">
       <column name="id" type="varchar(255)">
@@ -159,6 +132,31 @@
       </column>
     </createTable>
 
+    <addForeignKeyConstraint baseColumnNames="rule_id" baseTableName="rule_category"
+      constraintName="FK_RULE_ID_RULE_CATEGORY"
+      referencedColumnNames="id" referencedTableName="rule"/>
+
+    <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="rule_category"
+      constraintName="FK_CATEGORY_ID_RULE_CATEGORY"
+      referencedColumnNames="id" referencedTableName="category"/>
+
+    <addForeignKeyConstraint baseColumnNames="working_set_id" baseTableName="working_set_category"
+      constraintName="FK_WORKING_SET_ID_WORKING_SET_CATEGORY"
+      referencedColumnNames="id" referencedTableName="working_set"/>
+
+    <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="working_set_category"
+      constraintName="FK_CATEGORY_ID_WORKING_SET_CATEGORY"
+      referencedColumnNames="id" referencedTableName="category"/>
+
+    <addForeignKeyConstraint baseColumnNames="rule_id" baseTableName="rule_version"
+      constraintName="FK_RULE_ID_RULE_VERSION" deferrable="false"
+      initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+      referencedColumnNames="id" referencedTableName="rule"/>
+
+    <addForeignKeyConstraint baseColumnNames="working_set_id" baseTableName="working_set_version"
+      constraintName="FK_WORKING_SET_ID_WORKING_SET_VERSION" deferrable="false"
+      initiallyDeferred="false" onDelete="CASCADE" onUpdate="CASCADE"
+      referencedColumnNames="id" referencedTableName="working_set"/>
 
     <insert tableName="category">
       <column name="id" value="37b6d430-c1b4-11ea-b3de-0242ac130004"/>

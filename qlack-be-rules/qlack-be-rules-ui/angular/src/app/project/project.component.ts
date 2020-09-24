@@ -7,6 +7,9 @@ import {RuleDto} from '../dto/rule-dto';
 import {WorkingSetService} from '../services/working-set.service';
 import {RuleService} from '../services/rule.service';
 import {MatSelectionList} from '@angular/material/list';
+import {Observable} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-project',
@@ -19,6 +22,12 @@ export class ProjectComponent implements OnInit {
   workingSets: WorkingSetDto[];
   rules: RuleDto[];
   categories: CategoryDto[];
+
+  formControl = new FormControl();
+  options = new Map();
+  searchOptions: string[] = [];
+  filteredSearchOptions: Observable<string[]>;
+
   @ViewChild('workingSetList') workingSetList: MatSelectionList;
   @ViewChild('ruleList') ruleList: MatSelectionList;
   @ViewChild('categoryList') categoryList: MatSelectionList;
@@ -32,15 +41,47 @@ export class ProjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.workingSetService.getAllSorted().subscribe(response =>
-      this.workingSets = response
+    this.workingSetService.getAllSorted().subscribe(response => {
+      this.workingSets = response;
+      response.forEach(resp => {
+        this.searchOptions.push(resp.name);
+        this.options.set(resp.name, 'w' + resp.id);
+      });
+    });
+    this.ruleService.getAllSorted().subscribe(response => {
+      this.rules = response;
+      response.forEach(resp => {
+        this.searchOptions.push(resp.name);
+        this.options.set(resp.name, 'r' + resp.id);
+      });
+    });
+    this.categoryService.getAllSorted().subscribe(response => {
+      this.categories = response;
+      response.forEach(resp => {
+        this.searchOptions.push(resp.name);
+        this.options.set(resp.name, 'c' + resp.id);
+      });
+    });
+
+    this.filteredSearchOptions = this.formControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
     );
-    this.ruleService.getAllSorted().subscribe(response =>
-      this.rules = response
-    );
-    this.categoryService.getAllSorted().subscribe(response =>
-      this.categories = response
-    );
+  }
+
+  optionSelect(name: string) {
+    if (this.options.has(name)) {
+      const fullId: string = this.options.get(name);
+      const id: string = fullId.slice(1, fullId.length);
+
+      if (fullId.charAt(0) == 'w') {
+        this.router.navigate(['project/working-set', id]);
+      } else if (fullId.charAt(0) == 'r') {
+        this.router.navigate(['project/rule', id]);
+      } else {
+        this.router.navigate(['project/category', id]);
+      }
+    }
   }
 
   backToMenu() {
@@ -81,5 +122,10 @@ export class ProjectComponent implements OnInit {
     this.workingSetList.deselectAll();
     this.ruleList.deselectAll();
     this.categoryList.deselectAll();
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.searchOptions.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 }

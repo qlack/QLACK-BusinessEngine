@@ -34,6 +34,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {HttpClientModule} from '@angular/common/http';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AceEditorModule} from 'ng2-ace-editor';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import {AceEditorModule} from 'ng2-ace-editor';
     HttpClientModule,
     AceEditorModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]
