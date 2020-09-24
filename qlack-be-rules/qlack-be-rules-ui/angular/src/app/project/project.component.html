@@ -30,10 +30,9 @@
               <button class="search-icon" disabled mat-icon-button>
                 <mat-icon>search</mat-icon>
               </button>
-              <input (input)="searchText=$event.target.value" [formControl]="formControl"
-                     [matAutocomplete]="auto"
+              <input [(ngModel)]="searchText" [formControl]="formControl"
                      style="border: none !important; outline: none !important; font-size: 1rem; max-width: 80%;"
-                     [value]="searchText" placeholder="Search" type="text">
+                     [matAutocomplete]="auto" placeholder="Search" type="text">
               <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
                 <mat-option (onSelectionChange)="optionSelect(option)"
                             *ngFor="let option of filteredSearchOptions | async" [value]="option">
