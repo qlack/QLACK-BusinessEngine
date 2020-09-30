@@ -9,6 +9,7 @@ import {AddWorkingSetComponent} from './add-pages/add-working-set/add-working-se
 import {AddRuleComponent} from './add-pages/add-rule/add-rule.component';
 import {AddCategoryComponent} from './add-pages/add-category/add-category.component';
 import {AddVersionComponent} from './add-pages/add-version/add-version.component';
+import {DmnEditorPageComponent} from './pages/dmn-editor-page/dmn-editor-page.component';
 
 
 const routes: Routes = [
@@ -22,7 +23,8 @@ const routes: Routes = [
         {path: 'category/:id', component: CategoryPageComponent},
         {path: 'add-working-set', component: AddWorkingSetComponent},
         {path: 'add-rule', component: AddRuleComponent},
-        {path: 'add-category', component: AddCategoryComponent}
+        {path: 'add-category', component: AddCategoryComponent},
+        {path: 'rule/:id/dmn-editor', component: DmnEditorPageComponent}
       ]
   },
   {path: 'home', component: HomeComponent},

@@ -4,6 +4,7 @@ import com.eurodyn.qlack.rulesdemo.dto.RuleVersionDTO;
 import com.eurodyn.qlack.rulesdemo.model.RuleVersion;
 import com.eurodyn.qlack.rulesdemo.service.RuleVersionService;
 import com.querydsl.core.types.Predicate;
+import javassist.NotFoundException;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +50,7 @@ public class RuleVersionController {
         return ruleVersionService.findAll(predicate, sort);
     }
 
-    @PostMapping
-    public RuleVersionDTO upload(@Valid @RequestBody RuleVersionDTO ruleVersionDTO) {
+    @PostMapping public RuleVersionDTO upload(@Valid @RequestBody RuleVersionDTO ruleVersionDTO) {
         if (ruleVersionService.isXmlWellFormed(ruleVersionDTO.getDmnXml())) {
             return ruleVersionService.save(ruleVersionDTO);
         } else {
@@ -58,8 +58,13 @@ public class RuleVersionController {
         }
     }
 
-    @DeleteMapping("{versionId}")
-    public void delete(@Valid @PathVariable String versionId) {
+    @PostMapping("/rule/{ruleId}")
+    public RuleVersionDTO saveXml(@Valid @PathVariable String ruleId, @RequestBody String xml)
+        throws NotFoundException {
+        return ruleVersionService.saveXml(ruleId, xml);
+    }
+
+    @DeleteMapping("{versionId}") public void delete(@Valid @PathVariable String versionId) {
         ruleVersionService.deleteById(versionId);
     }
 

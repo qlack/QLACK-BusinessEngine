@@ -3,6 +3,8 @@ package com.eurodyn.qlack.rulesdemo.service;
 import com.eurodyn.qlack.rulesdemo.dto.RuleVersionDTO;
 import com.eurodyn.qlack.rulesdemo.model.QRuleVersion;
 import com.eurodyn.qlack.rulesdemo.model.RuleVersion;
+import com.eurodyn.qlack.util.data.optional.ReturnOptional;
+import javassist.NotFoundException;
 import javax.transaction.Transactional;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -14,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service @Transactional @RequiredArgsConstructor public class RuleVersionService
     extends BaseService<RuleVersionDTO, RuleVersion> {
@@ -38,6 +41,18 @@ import java.util.List;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public RuleVersionDTO saveXml(String ruleId, String xml) throws NotFoundException {
+        Optional<RuleVersion> opt = repository.findById(ruleId);
+        if (opt.isPresent()) {
+            RuleVersion ruleVersion = ReturnOptional.r(opt);
+            ruleVersion.setDmnXml(xml);
+            ruleVersion = repository.save(ruleVersion);
+            return mapper.map(ruleVersion);
+        } else {
+            throw new NotFoundException("The rule version not found");
         }
     }
 }

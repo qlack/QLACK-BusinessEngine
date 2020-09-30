@@ -35,6 +35,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {AceEditorModule} from 'ng2-ace-editor';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {DmnEditorPageComponent} from './pages/dmn-editor-page/dmn-editor-page.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     ConfirmPopupComponent,
     AddVersionComponent,
     AddRulePopupComponent,
+    DmnEditorPageComponent,
   ],
   imports: [
     BrowserModule,

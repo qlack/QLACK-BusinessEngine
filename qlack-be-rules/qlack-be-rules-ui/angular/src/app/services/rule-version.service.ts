@@ -19,4 +19,9 @@ export class RuleVersionService extends CrudService<RuleVersionDto> {
     return this.http.get<RuleVersionDto[]>(`${AppConstants.API_ROOT}/ruleVersions/rule/${id}`);
   }
 
+  saveXml(id: string, xml: string): Observable<RuleVersionDto[]> {
+    return this.http.post<RuleVersionDto[]>(`${AppConstants.API_ROOT}/ruleVersions/rule/${id}`,
+      xml);
+  }
+
 }

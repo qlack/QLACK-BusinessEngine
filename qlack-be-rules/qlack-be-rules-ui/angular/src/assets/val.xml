@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions id="definitions_1u0dyg5" name="definitions"
+  namespace="http://camunda.org/schema/1.0/dmn"
+  xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/">
+  <decision id="dish-decision" name="">
+    <decisionTable id="">
+      <input id="" label="">
+        <inputExpression id="" typeRef="string">
+        </inputExpression>
+      </input>
+      <output id="" label="" typeRef="string"/>
+    </decisionTable>
+  </decision>
+</definitions>

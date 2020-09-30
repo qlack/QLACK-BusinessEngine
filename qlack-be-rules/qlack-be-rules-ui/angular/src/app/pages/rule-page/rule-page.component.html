@@ -170,7 +170,15 @@
     <div *ngIf="version && edit" fxFlex="100" fxLayout="row">
       <input #xmlInput (change)="inputFile($event)" accept=".xml" hidden type="file"/>
       <button (click)="xmlInput.click()" mat-button>
-        UPLOAD A DMN XML FILE
+        UPLOAD
+      </button>
+      <button *ngIf="!dmn" [routerLink]="['dmn-editor']" [state]="{id: version.id, data: dmn}"
+              mat-button>
+        CREATE
+      </button>
+      <button *ngIf="dmn" [routerLink]="['dmn-editor']" [state]="{id: version.id, data: dmn}"
+              mat-button>
+        EDIT
       </button>
     </div>
   </div>
