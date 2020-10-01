@@ -16,6 +16,8 @@ export class DmnEditorPageComponent implements OnInit {
   xml = '';
   id = '';
   versionId = '';
+  ruleName = '';
+  versionName = '';
 
   constructor(
     private http: HttpClient,
@@ -28,6 +30,9 @@ export class DmnEditorPageComponent implements OnInit {
     this.http.get('../assets/val.xml', {responseType: 'text'}).subscribe(x => {
       this.versionId = window.history.state.id;
       this.dmn = window.history.state.data;
+      this.ruleName = window.history.state.rule;
+      this.versionName = window.history.state.version;
+
       if (!this.dmn) {
         this.dmn = x;
       }
@@ -62,5 +67,9 @@ export class DmnEditorPageComponent implements OnInit {
     this.ruleVersionService.saveXml(this.versionId, this.xml).subscribe(response =>
       this.router.navigate(['project/rule', this.id])
     );
+  }
+
+  cancel() {
+    this.router.navigate(['project/rule', this.id]);
   }
 }
