@@ -659,7 +659,7 @@
     <artifactId>qlack-be-forms</artifactId>
     <groupId>com.eurodyn.qlack</groupId>
     <relativePath>../pom.xml</relativePath>
-    <version>3.3.1-SNAPSHOT</version>
+    <version>3.4.4</version>
   </parent>
 
   <profiles>

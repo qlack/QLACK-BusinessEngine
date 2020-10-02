@@ -13,7 +13,7 @@
 
   <groupId>com.eurodyn.qlack</groupId>
   <artifactId>QLACK-BusinessEngine</artifactId>
-  <version>3.3.1-SNAPSHOT</version>
+  <version>3.4.4</version>
 
   <properties>
     <java.version>1.8</java.version>
