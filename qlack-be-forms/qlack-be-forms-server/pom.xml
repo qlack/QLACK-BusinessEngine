@@ -25,6 +25,35 @@
         <groupId>org.springframework.boot</groupId>
         <version>2.2.1.RELEASE</version>
       </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <annotationProcessorPaths>
+            <annotationProcessorPath>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
+            </annotationProcessorPath>
+            <annotationProcessorPath>
+              <groupId>com.querydsl</groupId>
+              <artifactId>querydsl-jpa-codegen</artifactId>
+              <version>${querydsl.version}</version>
+            </annotationProcessorPath>
+            <annotationProcessorPath>
+              <groupId>com.querydsl</groupId>
+              <artifactId>querydsl-apt</artifactId>
+              <classifier>jpa</classifier>
+              <version>${querydsl.version}</version>
+            </annotationProcessorPath>
+            <annotationProcessorPath>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </annotationProcessorPath>
+          </annotationProcessorPaths>
+        </configuration>
+        <version>${maven-compiler-plugin.version}</version>
+      </plugin>
     </plugins>
   </build>
 
@@ -629,7 +658,7 @@
   <parent>
     <artifactId>qlack-be-forms</artifactId>
     <groupId>com.eurodyn.qlack</groupId>
-    <relativePath>../</relativePath>
+    <relativePath>../pom.xml</relativePath>
     <version>3.3.1-SNAPSHOT</version>
   </parent>
 
@@ -760,7 +789,6 @@
                 </goals>
                 <id>default-copy-resources2</id>
                 <phase>process-resources</phase>
-
               </execution>
               <!--                            <execution>-->
               <!--                                <configuration>-->
