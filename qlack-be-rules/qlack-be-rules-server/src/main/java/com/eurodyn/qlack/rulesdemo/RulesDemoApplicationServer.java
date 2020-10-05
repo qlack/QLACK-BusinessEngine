@@ -17,7 +17,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "com.eurodyn.qlack.rulesdemo.web",
         "com.eurodyn.qlack.rulesdemo.service",
         "com.eurodyn.qlack.rulesdemo.mapper",
-        "com.eurodyn.qlack.rulesdemo.config",
         "com.eurodyn.qlack.util.*"
 })
 public class RulesDemoApplicationServer {
