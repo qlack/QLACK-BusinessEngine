@@ -4,4 +4,10 @@ sudo: false
 
 jdk: openjdk8
 
-script: mvn clean install
+addons:
+  sonarcloud:
+    organization: "qlack"
+    token:
+      secure: "GMn1R7Lj+nJYdQ5hmqhB0tAVW+JkbFlAdHGUUCADL0Ne79BchYQUHgjI0BBSoa8oy3+81CRthxVh0638CeT3tSkU+SJMwofpoqN0f7YG7DpWim0r88ntwaG2spnR7i+GpsD79KCS8/uL5hoMbieD6zsn7toFVC6WGs3mduTUxXO1NDH6qyx/twXX2vElAsQPErTvXVmFjwpZpDgLBUOk39ttB0CiboG8lut+1FgImrGh++D6IPpaRkvkjvMs8PMuWMCuYxh7FN94HhCKfUqc+NKGnm6WN2gg5h8DSkBV3QL7XOV8kf+Wt9FV9SDZM14mpyO4pZB+G7HcIIZORy/l+pFUQfONkAjcm4F8uTsl9l+iCLA2dJ2b8JAf1Kg8+6nK8wqS6NGXstpFICVbFw8tVqVCqrh8PEZn9Q3DWhJQdlflbN2BQEd3O+hzlnntGXS2vBrRX4cOR11GtxBYdidZ3eh7DxxhaiHOQFYVruGTRK+YauvatwSsceUghNbFjt4qaWOJjY4ih5xpRmL414fmBln6hb2EdEYFVl8Wbu+jplVgVF8GQR4EDv11HfXEH8T4EOjJTOOk7zXLB7cQoUMTIvK6BZsvXHA2H+pyoyfma280RmutgzoWA/GvT1tV6KRfK2hHlUG8Tsn5D5myjzw74TvSuLXHb/Yj+VP6gF6ecRE="
+
+script: mvn clean install sonar:sonar -Dsonar.projectKey=qlack_be
