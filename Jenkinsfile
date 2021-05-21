@@ -18,7 +18,9 @@ pipeline {
         }
         stage('Sonar Analysis') {
             steps {
-                sh 'mvn sonar:sonar -Dsonar.projectName=QLACK-BusinessEngine -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_KEY_QLACK_BE}'
+                withSonarQubeEnv('sonar'){
+                    sh 'mvn sonar:sonar -Dsonar.projectName=QLACK-BusinessEngine -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_KEY_QLACK_BE}'
+                }
             }
         }
         stage('Produce bom.xml'){
