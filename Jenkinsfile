@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'imousmoutis/maven3-jdk8:1.0.2'
+            image 'eddevopsd2/maven-java-npm-docker:mvn3.6.3-jdk8-npm6.14.4-docker'
             args '-v /root/.m2/QLACK-BusinessEngine:/root/.m2'
         }
     }
