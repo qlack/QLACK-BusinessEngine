@@ -24,9 +24,6 @@
     <maven-release-plugin.version>3.0.0-M1</maven-release-plugin.version>
     <sonar.version>3.7.0.1746</sonar.version>
     <jacoco.version>0.8.5</jacoco.version>
-    <dependency-check-maven.version>5.3.0</dependency-check-maven.version>
-    <sonar.dependencyCheck.reportPath>target/dependency-check-report.xml</sonar.dependencyCheck.reportPath>
-    <sonar.dependencyCheck.htmlReportPath>target/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
   </properties>
 
   <build>
@@ -74,15 +71,6 @@
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
           <version>${sonar.version}</version>
-        </plugin>
-        <plugin>
-          <groupId>org.owasp</groupId>
-          <artifactId>dependency-check-maven</artifactId>
-          <version>${dependency-check-maven.version}</version>
-          <configuration>
-            <format>ALL</format>
-            <failOnError>false</failOnError>
-          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>
