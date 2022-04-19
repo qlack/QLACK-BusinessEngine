@@ -14,6 +14,7 @@ pipeline {
         stage('Sonar Analysis') {
             steps {
                 withSonarQubeEnv('sonar'){
+                    sh 'update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java'
                     sh 'mvn sonar:sonar -Dsonar.projectName=QLACK-BusinessEngine -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_KEY_QLACK_BE}'
                 }
             }
