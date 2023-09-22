@@ -1,43 +1,97 @@
 pipeline {
-    agent {
-        docker {
-            image 'eddevopsd2/maven-java-npm-docker:mvn3.6.3-jdk8-npm6.14.4-docker'
-            args '-v /root/.m2/QLACK-BusinessEngine:/root/.m2'
+   agent {
+        kubernetes {
+            yaml '''
+                    apiVersion: v1
+                    kind: Pod
+                    metadata:
+                      name: qlack-be
+                      namespace: jenkins
+                    spec:
+                      affinity:
+                        podAntiAffinity:
+                          preferredDuringSchedulingIgnoredDuringExecution:
+                          - weight: 50
+                            podAffinityTerm:
+                              labelSelector:
+                                matchExpressions:
+                                - key: jenkins/jenkins-jenkins-agent
+                                  operator: In
+                                  values:
+                                  - "true"
+                              topologyKey: kubernetes.io/hostname
+                      securityContext:
+                        runAsUser: 0
+                        runAsGroup: 0
+                      containers:
+                      - name: qlack-be-builder
+                        image: eddevopsd2/maven-java-npm-docker:mvn3.6.3-jdk8-npm6.14.4-docker
+                        volumeMounts:
+                        - name: maven
+                          mountPath: /root/.m2/
+                          subPath: QLACK-BusinessEngine
+                        tty: true
+                        securityContext:
+                          privileged: true
+                          runAsUser: 0
+                          runAsGroup: 0
+                      imagePullSecrets:
+                      - name: regcred
+                      restartPolicy: OnFailure
+                      volumes:
+                      - name: maven
+                        persistentVolumeClaim:
+                          claimName: maven-nfs-pvc
+            '''
+            workspaceVolume persistentVolumeClaimWorkspaceVolume(claimName: 'workspace-nfs-pvc', readOnly: false)
         }
+    }
+    options {
+        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 3, unit: 'HOURS')
     }
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                container (name: 'qlack-be-builder') {
+                    sh 'mvn clean install'
+                }
             }
         }
         stage('Sonar Analysis') {
             steps {
-                withSonarQubeEnv('sonar'){
-                    sh 'update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java'
-                    sh 'mvn sonar:sonar -Dsonar.projectName=QLACK-BusinessEngine -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_KEY_QLACK_BE}'
+                container (name: 'qlack-be-builder') {
+                    withSonarQubeEnv('sonar'){
+                        sh 'update-alternatives --set java /usr/lib/jvm/java-11-openjdk-amd64/bin/java'
+                        sh 'mvn sonar:sonar -Dsonar.projectName=QLACK-BusinessEngine -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.token=${SONAR_GLOBAL_KEY} -Dsonar.working.directory="/tmp"'
+                    }
                 }
             }
         }
         stage('Produce bom.xml'){
             steps{
-                sh 'mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom'
+                container (name: 'qlack-be-builder') {
+                    sh 'mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom'
+                }
             }
         }
         stage('Dependency-Track Analysis'){
-            steps{
-                sh '''
-                    cat > payload.json <<__HERE__
-                    {
-                        "project": "946182a4-0763-4497-b5f2-dc5fd6d46b0a",
-                        "bom": "$(cat target/bom.xml |base64 -w 0 -)"
-                    }
-                    __HERE__
-                   '''
+            steps {
+                container (name: 'qlack-be-builder') {
+                    sh '''
+                        cat > payload.json <<__HERE__
+                        {
+                            "project": "7a496d37-4f90-42bb-a007-e8161802f2a5",
+                            "bom": "$(cat target/bom.xml |base64 -w 0 -)"
+                        }
+                        __HERE__
+                    '''
 
-                sh '''
-                    curl -X "PUT" ${DEPENDENCY_TRACK_URL} -H 'Content-Type: application/json' -H 'X-API-Key: '${DEPENDENCY_TRACK_API_KEY} -d @payload.json
-                   '''
+                    sh '''
+                        curl -X "PUT" ${DEPENDENCY_TRACK_URL} -H 'Content-Type: application/json' -H 'X-API-Key: '${DEPENDENCY_TRACK_API_KEY} -d @payload.json
+                    '''
+                }
             }
         }
     }
